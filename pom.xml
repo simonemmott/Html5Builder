@@ -18,7 +18,7 @@
     <dependency>
       <groupId>com.k2</groupId>
       <artifactId>XMLBuilder</artifactId>
-      <version>1.0.1-FINAL</version>
+      <version>1.0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
