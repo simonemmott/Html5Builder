@@ -14,11 +14,40 @@ public class HtmlPage extends XMLDocument {
 	HtmlHead head;
 	HtmlBody body;
 	
-	@Override
-	protected String prolog() { return "<!DOCTYPE html>"; }
+	private String docType;
+	private boolean includeXmlProlog = false;
 	
-	public HtmlPage(Html5Builder hb) {
+	@Override
+	public HtmlPage setVersion(String version) {
+		super.setVersion(version);
+		return this;
+	}
+	
+	@Override
+	public HtmlPage setEncoding(String encoding) {
+		super.setEncoding(encoding);
+		return this;
+	}
+	
+	@Override
+	protected String prolog() { 
+		if (includeXmlProlog) return super.prolog()+System.lineSeparator()+"<!DOCTYPE "+docType+">";
+		return "<!DOCTYPE "+docType+">"; 
+	}
+	
+	public HtmlPage(Html5Builder hb, String docType) {
 		super(hb, "html");
+		this.docType = docType;
+		head = hb.element(HtmlHead.class);
+		add(head);
+		body = hb.element(HtmlBody.class);
+		add(body);
+	}
+	
+	public HtmlPage(Html5Builder hb, String docType, boolean includeXmlProlog) {
+		super(hb, "html");
+		this.includeXmlProlog = includeXmlProlog;
+		this.docType = docType;
 		head = hb.element(HtmlHead.class);
 		add(head);
 		body = hb.element(HtmlBody.class);

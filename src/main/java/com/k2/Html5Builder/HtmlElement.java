@@ -6,46 +6,12 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 import com.k2.Html5Builder.elements.*;
+import com.k2.Html5Builder.elements.attrValues.HtmlLanguageCode;
 import com.k2.XMLBuilder.XMLElement;
+import com.k2.XMLBuilder.XMLBuilder.NullAttributeHandling;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public abstract class HtmlElement<T extends XMLElement> extends XMLElement {
-	
-	// Global Attributes
-	public T setId(String value) { attr("id", value); return (T) this; }
-	public T setClass(String value) { attr("class", value); return (T) this; }
-	public T setAccesskey(String value) { attr("accesskey", value); return (T) this; }
-	public T setContentEditable(String value) { attr("contenteditable", value); return (T) this; }
-	public T setContextMenu(String value) { attr("contextmenu", value); return (T) this; }
-	public T setDir(String value) { attr("dir", value); return (T) this; }
-	public T setDraggable(String value) { attr("draggable", value); return (T) this; }
-	public T setDropzone(String value) { attr("dropzone", value); return (T) this; }
-	public T setHidden(String value) { attr("hidden", value); return (T) this; }
-	public T setLang(String value) { attr("lang", value); return (T) this; }
-	public T aetSpellCheck(String value) { attr("spellcheck", value); return (T) this; }
-	public T setTabIndex(Integer value) { attr("tabindex", value.toString()); return (T) this; }
-	public T setTitle(String value) { attr("title", value); return (T) this; }
-	public T setTranslate(String value) { attr("translate", value); return (T) this; }
-	public T setStyle(String value) { attr("style", value); return (T) this; }
-	public T addClass(String value) { 
-		String curVal = get("class");
-		if (curVal == null || "".equals(curVal)) {
-			attr("class", value);
-			 return (T) this;
-		}
-		attr("class", curVal+" "+value); 
-		 return (T) this;
-	}
-	public T addData(String id, String value) { attr("data-"+id, value); return (T) this; }
-	public T addStyle(String label, String value) {
-		String curVal = get("style");
-		if (curVal==null || "".equals(curVal)) {
-			attr("style", label+":"+value);
-			 return (T) this;
-		}
-		attr("style", curVal+";"+label+":"+value);
-		 return (T) this;
-	}
+public abstract class HtmlElement<T extends XMLElement> extends HtmlGlobalElement<T> {
 
 	// Form Events
 	public T onBlur(String value) { attr("onBlur", value); return (T) this; }
@@ -117,44 +83,33 @@ public abstract class HtmlElement<T extends XMLElement> extends XMLElement {
 	// Misc Evens
 	public T onShow(String value) { attr("onShow", value); return (T) this; }
 	public T onToggle(String value) { attr("onToggle", value); return (T) this; }
-	
-	private <E extends HtmlElement> E createAndAddChild(Class<E> elemClass) {
-		HtmlElement el = ((Html5Builder)xb).element(elemClass); 
-		add(el); 
-		return (E) el;
-	}
-	
-	public HtmlA a() { return createAndAddChild(HtmlA.class); }
-	public HtmlAbbr abbr() { return createAndAddChild(HtmlAbbr.class); }
-	public HtmlAddress address() { return createAndAddChild(HtmlAddress.class); }
-	
-//	public HtmlA a() { HtmlA el = ((Html5Builder)xb).element(HtmlA.class); add(el); return el; }
-//	public HtmlAbbr abbr() { HtmlAbbr el = ((Html5Builder)xb).element(HtmlAbbr.class); add(el); return el; }
-//	public HtmlAddress address() { HtmlAddress el = ((Html5Builder)xb).element(HtmlAddress.class); add(el); return el; }
-	
-	
-	
+		
+	@Override
+	public HtmlElement up() { return (HtmlElement)super.up(); }
 	
 	protected HtmlElement(Html5Builder hb, String tag) {
 		super(hb, tag);
 	}
-	
-	public T text(String text) { return (T)super.data(text); }
-	public T t(String text) { return (T)super.data(text); }
-	@Override
-	public T data(String text) { return (T)super.data(text); }
-	@Override
-	public T d(String text) { return (T)super.data(text); }
-	
-	@Override
-	public HtmlElement up() { return (HtmlElement)super.up(); }
-	
-	public HtmlPage page() { return (HtmlPage)root(); }
-	
-	public PrintWriter toHtml(PrintWriter pw) { return toXml(pw); }
-	public Writer toHtml(Writer w) { return toXml(w); }
-	public File toHtml(File file) throws FileNotFoundException { return toXml(file); }
 
+	protected <E extends HtmlGlobalElement> E createAndAddChild(Class<E> elemClass) {
+		HtmlGlobalElement el = ((Html5Builder)xb).element(elemClass); 
+		add(el); 
+		return (E) el;
+	}
+
+	public HtmlA a() { return createAndAddChild(HtmlA.class); }
+	public HtmlAbbr abbr() { return createAndAddChild(HtmlAbbr.class); }
+	public HtmlAddress address() { return createAndAddChild(HtmlAddress.class); }
+	public HtmlArea area() { return createAndAddChild(HtmlArea.class); }
+	public HtmlArticle article() { return createAndAddChild(HtmlArticle.class); }
+	public HtmlAside aside() { return createAndAddChild(HtmlAside.class); }
+	public HtmlAudio audio() { return createAndAddChild(HtmlAudio.class); }
+	public HtmlB b() { return createAndAddChild(HtmlB.class); }
+	public HtmlBdi bdi() { return createAndAddChild(HtmlBdi.class); }
+	public HtmlBdo bdo() { return createAndAddChild(HtmlBdo.class); }
+	public HtmlBlockQuote blockQuote() { return createAndAddChild(HtmlBlockQuote.class); }
+	public T br() { createAndAddChild(HtmlBr.class); return (T) this;}
+	public HtmlButton button() { return createAndAddChild(HtmlButton.class); }
 
 	
 	

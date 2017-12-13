@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import com.k2.Html5Builder.elements.attrValues.AttrTarget;
+
 public class BasicExample {
 
 	public static void main(String[] args) {
@@ -14,7 +16,14 @@ public class BasicExample {
 		
 		
 //		try {
-			hb.page()
+			hb.page(true, false, true, null, "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd")
+				.setVersion("0.9")
+				.setEncoding("UTF-16")
+				.head
+					.base()
+						.setHref("http://www.example.com/mySite/")
+						.setTarget(AttrTarget.PARENT)
+						.page()
 				.body
 				.a()
 					.setHref("http://google.com")

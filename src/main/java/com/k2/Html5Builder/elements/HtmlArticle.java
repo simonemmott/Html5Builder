@@ -5,10 +5,10 @@ import com.k2.Html5Builder.HtmlElement;
 import com.k2.Html5Builder.elements.attrValues.AttrRel;
 import com.k2.Html5Builder.elements.attrValues.AttrTarget;
 
-public class HtmlAbbr extends HtmlElement<HtmlAbbr> {
+public class HtmlArticle extends HtmlElement<HtmlArticle> {
 	
-	public HtmlAbbr(Html5Builder hb) {
-		super(hb, "abbr");		
+	public HtmlArticle(Html5Builder hb) {
+		super(hb, "article");		
 	}
 
 }
