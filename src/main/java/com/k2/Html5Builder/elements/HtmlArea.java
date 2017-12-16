@@ -11,9 +11,9 @@ public class HtmlArea extends HtmlElement<HtmlArea> {
 	public HtmlArea setDownload(String value) { attr("download", value); return this; }
 	public HtmlArea setHref(String value) { attr("href", value); return this; }
 	public HtmlArea setMedia(String value) { attr("media", value); return this; }
-	public HtmlArea setRel(AttrRel value) { attr("rel", value.getValue()); return this; }
-	public HtmlArea setShape(AttrShape value) { attr("shape", value.getValue()); return this; }
-	public HtmlArea setTarget(AttrTarget value) { attr("target", value.getValue()); return this; }
+	public HtmlArea setRel(Rel value) { attr("rel", value.getValue()); return this; }
+	public HtmlArea setShape(Shape value) { attr("shape", value.getValue()); return this; }
+	public HtmlArea setTarget(Target value) { attr("target", value.getValue()); return this; }
 	public HtmlArea setTarget(String value) { attr("target", value); return this; }
 	public HtmlArea setType(String value) { attr("type", value); return this; }
 

@@ -4,6 +4,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import com.k2.XMLBuilder.XMLBuilder;
@@ -35,6 +37,13 @@ public class Html5Builder extends XMLBuilder
     		if (uaInfo == null) return true;
     		return (uaInfo.getType() == checkType);
     }
+    
+	private SimpleDateFormat dateTimeZone = new SimpleDateFormat("yyyy-MM-dd HH:mi:ssz");
+	
+	public String dateTimeZone(Date date) {
+		return dateTimeZone.format(date);
+	}
+
     
     public boolean uaOk(UserAgentInfo.UserAgentType checkType, Integer checkVer) {
     		if (uaInfo == null) return true;

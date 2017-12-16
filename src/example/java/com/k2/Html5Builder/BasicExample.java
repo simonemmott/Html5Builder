@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-import com.k2.Html5Builder.elements.attrValues.AttrTarget;
+import com.k2.Html5Builder.elements.attrValues.Target;
 
 public class BasicExample {
 
@@ -22,7 +22,7 @@ public class BasicExample {
 				.head
 					.base()
 						.setHref("http://www.example.com/mySite/")
-						.setTarget(AttrTarget.PARENT)
+						.setTarget(Target.PARENT)
 						.page()
 				.body
 				.a()

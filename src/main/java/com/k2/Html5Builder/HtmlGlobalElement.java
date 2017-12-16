@@ -70,12 +70,19 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 		return (T) this;
 	}
 
-	
+	protected Html5Builder hb() { return (Html5Builder)xb; }
+ 	
 	public HtmlPage page() { return (HtmlPage)root(); }
 	
 	public PrintWriter toHtml(PrintWriter pw) { return toXml(pw); }
 	public Writer toHtml(Writer w) { return toXml(w); }
 	public File toHtml(File file) throws FileNotFoundException { return toXml(file); }
+
+	protected <E extends HtmlGlobalElement> E createAndAddChild(Class<E> elemClass) {
+		HtmlGlobalElement el = ((Html5Builder)xb).element(elemClass); 
+		add(el); 
+		return (E) el;
+	}
 
 
 	

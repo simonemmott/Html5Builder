@@ -91,12 +91,6 @@ public abstract class HtmlElement<T extends XMLElement> extends HtmlGlobalElemen
 		super(hb, tag);
 	}
 
-	protected <E extends HtmlGlobalElement> E createAndAddChild(Class<E> elemClass) {
-		HtmlGlobalElement el = ((Html5Builder)xb).element(elemClass); 
-		add(el); 
-		return (E) el;
-	}
-
 	public HtmlA a() { return createAndAddChild(HtmlA.class); }
 	public HtmlAbbr abbr() { return createAndAddChild(HtmlAbbr.class); }
 	public HtmlAddress address() { return createAndAddChild(HtmlAddress.class); }

@@ -1,11 +1,11 @@
 package com.k2.Html5Builder.elements.attrValues;
 
-public enum AttrDir {
+public enum Dir {
 	LTR("ltr"),
 	RTL("rtl");
 	
 	String value;
-	AttrDir(String value) { this.value = value; }
+	Dir(String value) { this.value = value; }
 	public String getValue() { return value; }
 
 }

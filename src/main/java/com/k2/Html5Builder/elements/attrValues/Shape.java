@@ -1,13 +1,13 @@
 package com.k2.Html5Builder.elements.attrValues;
 
-public enum AttrShape {
+public enum Shape {
 	DEFAULT("default"),
 	RECTANGLE("rect"),
 	CIRCLE("circle"),
 	POLYGON("poly");
 	
 	String value;
-	AttrShape(String value) { this.value = value; }
+	Shape(String value) { this.value = value; }
 	public String getValue() { return value; }
 
 }
