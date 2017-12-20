@@ -1,6 +1,6 @@
 package com.k2.Html5Builder.elements.attrValues;
 
-public enum Rel {
+public enum ARel {
 	ALTERNATE("alternate"),
 	AUTHOR("author"),
 	BOOKMARK("bookmark"),
@@ -16,7 +16,7 @@ public enum Rel {
 	TAG("tag");
 	
 	String value;
-	Rel(String value) { this.value = value; }
+	ARel(String value) { this.value = value; }
 	public String getValue() { return value; }
 
 }

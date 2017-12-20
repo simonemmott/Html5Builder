@@ -2,9 +2,10 @@ package com.k2.Html5Builder.elements;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlElement;
+import com.k2.Html5Builder.HtmlFlowElement;
 import com.k2.Html5Builder.HtmlPage;
 
-public class HtmlBody extends HtmlElement<HtmlBody> {
+public class HtmlBody extends HtmlFlowElement<HtmlBody> {
 	
 	public HtmlBody onAfterPrint(String value) { attr("onAfterPrint", value); return this; }
 	public HtmlBody onBeforePrint(String value) { attr("onBeforePrint", value); return this; }

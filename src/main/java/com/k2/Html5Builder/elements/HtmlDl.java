@@ -11,4 +11,7 @@ public class HtmlDl extends HtmlElement<HtmlDl> {
 		super(hb, "dl");		
 	}
 
+	public HtmlDd dd() { return createAndAddChild(HtmlDd.class); }
+	public HtmlDt dt() { return createAndAddChild(HtmlDt.class); }
+
 }

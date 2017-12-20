@@ -2,12 +2,13 @@ package com.k2.Html5Builder.elements;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlElement;
+import com.k2.Html5Builder.HtmlFlowElement;
 import com.k2.Html5Builder.MediaTypes.MediaType;
 import com.k2.Html5Builder.elements.attrValues.FormEncType;
 import com.k2.Html5Builder.elements.attrValues.FormMethod;
 import com.k2.Html5Builder.elements.attrValues.Target;
 
-public class HtmlForm extends HtmlElement<HtmlForm> {
+public class HtmlForm extends HtmlFlowElement<HtmlForm> {
 	
 	public HtmlForm setAcceptCharset(String value) { attr("accept-charset", value); return this; }
 	public HtmlForm setAction(String value) { attr("action", value); return this; }

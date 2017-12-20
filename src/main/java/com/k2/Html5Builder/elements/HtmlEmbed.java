@@ -12,7 +12,8 @@ public class HtmlEmbed extends HtmlElement<HtmlEmbed> {
 	public HtmlEmbed setType(MediaType value) { attr("type", value.getTemplate()); return this; }
 	
 	public HtmlEmbed(Html5Builder hb) {
-		super(hb, "embed");		
+		super(hb, "embed");	
+		emptyTag();
 	}
 
 }

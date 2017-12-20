@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import com.k2.Html5Builder.elements.HtmlBody;
+import com.k2.Html5Builder.elements.HtmlHead;
 import com.k2.Html5Builder.elements.attrValues.Target;
 
 public class BasicExample {
@@ -20,15 +22,24 @@ public class BasicExample {
 				.setVersion("0.9")
 				.setEncoding("UTF-16")
 				.head
+					.refreshRate(30)
+					.viewport("Some other viewport")
+					.author("Simon Emmott")
+					.description("This is the page description")
+					.keywords("hello", "world", "and", "more", "words", "lots, and, lots, of, words")
+					.author("Joe Bloggs!")
+					.keywords("more", "words")
 					.base()
 						.setHref("http://www.example.com/mySite/")
 						.setTarget(Target.PARENT)
-						.page()
+						.up(HtmlHead.class)
+					.author("Yet another author")
+					.up(HtmlPage.class)
 				.body
 				.a()
 					.setHref("http://google.com")
 					.data("Google")
-					.up()
+					.up(HtmlBody.class)
 				.abbr()
 					.setTitle("World Health Organisation")
 					.text("WHO")

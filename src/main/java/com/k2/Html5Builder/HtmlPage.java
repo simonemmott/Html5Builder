@@ -7,6 +7,8 @@ import java.io.Writer;
 
 import com.k2.Html5Builder.elements.HtmlBody;
 import com.k2.Html5Builder.elements.HtmlHead;
+import com.k2.Html5Builder.elements.HtmlMeta;
+import com.k2.Html5Builder.elements.attrValues.MetaName;
 import com.k2.XMLBuilder.XMLDocument;
 
 public class HtmlPage extends XMLDocument {

@@ -38,10 +38,22 @@ public class Html5Builder extends XMLBuilder
     		return (uaInfo.getType() == checkType);
     }
     
-	private SimpleDateFormat dateTimeZone = new SimpleDateFormat("yyyy-MM-dd HH:mi:ssz");
+	private SimpleDateFormat dateTimeZoneFormat = new SimpleDateFormat(DateFormat.DATE_TIME_ZONE.getValue());
 	
 	public String dateTimeZone(Date date) {
-		return dateTimeZone.format(date);
+		return dateTimeZoneFormat.format(date);
+	}
+
+	private SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DateFormat.DATE_TIME.getValue());
+	
+	public String dateTime(Date date) {
+		return dateTimeFormat.format(date);
+	}
+
+	private SimpleDateFormat dateFormat = new SimpleDateFormat(DateFormat.DATE.getValue());
+	
+	public String date(Date date) {
+		return dateFormat.format(date);
 	}
 
     

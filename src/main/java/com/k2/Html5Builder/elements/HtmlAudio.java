@@ -2,9 +2,10 @@ package com.k2.Html5Builder.elements;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlElement;
+import com.k2.Html5Builder.HtmlFlowElement;
 import com.k2.Html5Builder.elements.attrValues.Preload;
 
-public class HtmlAudio extends HtmlElement<HtmlAudio> {
+public class HtmlAudio extends HtmlFlowElement<HtmlAudio> {
 	
 	public HtmlAudio setAutoplay() { attr("autoplay", null); return this; }
 	public HtmlAudio setControls() { attr("controls", null); return this; }
@@ -17,5 +18,8 @@ public class HtmlAudio extends HtmlElement<HtmlAudio> {
 	public HtmlAudio(Html5Builder hb) {
 		super(hb, "audio");		
 	}
+
+	public HtmlSource source() { return createAndAddChild(HtmlSource.class); }
+	public HtmlTrack track() { return createAndAddChild(HtmlTrack.class); }
 
 }

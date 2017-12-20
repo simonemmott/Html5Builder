@@ -8,7 +8,8 @@ public class HtmlCol extends HtmlElement<HtmlCol> {
 	public HtmlCol setSpan(Integer value) { attr("span", value.toString()); return this; }
 
 	public HtmlCol(Html5Builder hb) {
-		super(hb, "col");		
+		super(hb, "col");
+		emptyTag();
 	}
 
 }

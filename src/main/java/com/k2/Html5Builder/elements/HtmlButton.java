@@ -2,13 +2,14 @@ package com.k2.Html5Builder.elements;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlElement;
+import com.k2.Html5Builder.HtmlPhrasingElement;
 import com.k2.Html5Builder.elements.attrValues.ButtonType;
 import com.k2.Html5Builder.elements.attrValues.Dir;
 import com.k2.Html5Builder.elements.attrValues.FormEncType;
 import com.k2.Html5Builder.elements.attrValues.FormMethod;
 import com.k2.Html5Builder.elements.attrValues.Target;
 
-public class HtmlButton extends HtmlElement<HtmlButton> {
+public class HtmlButton extends HtmlPhrasingElement<HtmlButton> {
 	
 	public HtmlButton setAutoFocus() { attr("autoFocus", null); return this; }
 	public HtmlButton setDisabled() { attr("disabled", null); return this; }

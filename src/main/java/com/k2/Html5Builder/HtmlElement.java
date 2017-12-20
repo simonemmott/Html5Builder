@@ -86,27 +86,18 @@ public abstract class HtmlElement<T extends XMLElement> extends HtmlGlobalElemen
 		
 	@Override
 	public HtmlElement up() { return (HtmlElement)super.up(); }
+	@Override
+	public HtmlElement getPreviousSibling() {
+		return (HtmlElement)super.getPreviousSibling();
+	}
+	@Override
+	public HtmlElement getNextSibling() {
+		return (HtmlElement)super.getNextSibling();
+	}
+	
 	
 	protected HtmlElement(Html5Builder hb, String tag) {
 		super(hb, tag);
-	}
-
-	public HtmlA a() { return createAndAddChild(HtmlA.class); }
-	public HtmlAbbr abbr() { return createAndAddChild(HtmlAbbr.class); }
-	public HtmlAddress address() { return createAndAddChild(HtmlAddress.class); }
-	public HtmlArea area() { return createAndAddChild(HtmlArea.class); }
-	public HtmlArticle article() { return createAndAddChild(HtmlArticle.class); }
-	public HtmlAside aside() { return createAndAddChild(HtmlAside.class); }
-	public HtmlAudio audio() { return createAndAddChild(HtmlAudio.class); }
-	public HtmlB b() { return createAndAddChild(HtmlB.class); }
-	public HtmlBdi bdi() { return createAndAddChild(HtmlBdi.class); }
-	public HtmlBdo bdo() { return createAndAddChild(HtmlBdo.class); }
-	public HtmlBlockQuote blockQuote() { return createAndAddChild(HtmlBlockQuote.class); }
-	public T br() { createAndAddChild(HtmlBr.class); return (T) this;}
-	public HtmlButton button() { return createAndAddChild(HtmlButton.class); }
-
-	
-	
-	
+	}	
 
 }

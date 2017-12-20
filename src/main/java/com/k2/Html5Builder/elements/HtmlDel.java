@@ -4,8 +4,9 @@ import java.util.Date;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlElement;
+import com.k2.Html5Builder.HtmlFlowElement;
 
-public class HtmlDel extends HtmlElement<HtmlDel> {
+public class HtmlDel extends HtmlFlowElement<HtmlDel> {
 	
 	public HtmlDel setCite(String value) { attr("cite", value); return this; }
 	public HtmlDel setDateTime(Date value) { attr("dateTime", hb().dateTimeZone(value)); return this; }

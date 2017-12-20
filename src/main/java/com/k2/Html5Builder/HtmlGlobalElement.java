@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Date;
+import java.util.List;
 
 import com.k2.Html5Builder.elements.*;
 import com.k2.Html5Builder.elements.attrValues.HtmlLanguageCode;
@@ -74,6 +76,10 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
  	
 	public HtmlPage page() { return (HtmlPage)root(); }
 	
+	public <P> P up(Class<P> parentClass) {
+		return (P)super.up();
+	}
+	
 	public PrintWriter toHtml(PrintWriter pw) { return toXml(pw); }
 	public Writer toHtml(Writer w) { return toXml(w); }
 	public File toHtml(File file) throws FileNotFoundException { return toXml(file); }
@@ -83,8 +89,22 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 		add(el); 
 		return (E) el;
 	}
+	
+	protected void warning(String message) {
+		((Html5Builder)xb).warning(message+ " at: "+getPath());
+	}
 
+	protected String dateTimeZone(Date date) {
+		return ((Html5Builder)xb).dateTimeZone(date);
+	}
 
+	protected String dateTime(Date date) {
+		return ((Html5Builder)xb).dateTime(date);
+	}
+
+	protected String date(Date date) {
+		return ((Html5Builder)xb).date(date);
+	}
 	
 	
 	
