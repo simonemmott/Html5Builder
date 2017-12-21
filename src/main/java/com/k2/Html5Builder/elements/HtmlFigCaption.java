@@ -3,16 +3,28 @@ package com.k2.Html5Builder.elements;
 import java.io.PrintWriter;
 
 import com.k2.Html5Builder.Html5Builder;
-import com.k2.Html5Builder.HtmlElement;
 import com.k2.Html5Builder.HtmlFlowElement;
-import com.k2.Html5Builder.MediaTypes.MediaType;
 
+/**
+ * A class representing an 'figcaption' html element
+ * 
+ * @author simon
+ *
+ */
 public class HtmlFigCaption extends HtmlFlowElement<HtmlFigCaption> {
 	
+	/**
+	 * Create the element instance setting the appropriate tag and defining the html builder that
+	 * created the element 
+	 * @param hb		The html builder that created the element
+	 */
 	public HtmlFigCaption(Html5Builder hb) {
 		super(hb, "figcaption");		
 	}
 	
+	/**
+	 * Override output to xml to check whether the figcaption is the first child of its parent.
+	 */
 	@Override
 	public PrintWriter toXml(PrintWriter pw) {
 		

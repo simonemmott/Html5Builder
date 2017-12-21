@@ -1,5 +1,11 @@
 package com.k2.Html5Builder.elements.attrValues;
 
+/**
+ * This enumeration defines the possible value for the rel attribute of 'link' elements
+ * 
+ * @author simon
+ *
+ */
 public enum LinkRel {
 	ALTERNATE("alternate"),
 	AUTHOR("author"),
@@ -19,6 +25,10 @@ public enum LinkRel {
 	
 	String value;
 	LinkRel(String value) { this.value = value; }
+	/**
+	 * Get the text value for this enumeration
+	 * @return	The text value of this enumeration
+	 */
 	public String getValue() { return value; }
 
 }

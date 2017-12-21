@@ -1,13 +1,43 @@
 package com.k2.Html5Builder;
 
+/**
+ * This class defines the available media types as enumerations
+ * 
+ * @author simon
+ *
+ */
 public class MediaTypes {
 	
+	/**
+	 * All media types enumeations implement this interface
+	 * 
+	 * @author simon
+	 *
+	 */
 	public interface MediaType {
+		/**
+		 * Get the registry as a string for this media type
+		 * @return	The registry as a string
+		 */
 		public String getRegistry();
+		/**
+		 * Get the type of this media type within the registry
+		 * @return	The type of this media type within the registry as a string
+		 */
 		public String getType();
+		/**
+		 * Get the html media type name of this media type
+		 * @return	The html media type name of this media type
+		 */
 		public String getTemplate();
 	}
 	
+	/**
+	 * Application media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Application implements MediaType {
 		_1d_interleaved_parityfec("application", "1d-interleaved-parityfec"),
 		_3gpdash_qoe_report_xml("application", "3gpdash-qoe-report+xml"),
@@ -1264,6 +1294,12 @@ public class MediaTypes {
 		
 	}
 
+	/**
+	 * Audio media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Audio implements MediaType {
 		
 		_1d_interleaved_parityfec("audio", "1d-interleaved-parityfec"),
@@ -1424,6 +1460,12 @@ public class MediaTypes {
 		
 	}
 
+	/**
+	 * Font media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Font implements MediaType {
 		
 		collection("font", "collection"),
@@ -1446,7 +1488,12 @@ public class MediaTypes {
 		
 	}
 
-	
+	/**
+	 * Image media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Image implements MediaType {
 		
 		aces("image", "aces"),
@@ -1514,6 +1561,12 @@ public class MediaTypes {
 	}
 
 
+	/**
+	 * Message media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Message implements MediaType {
 		
 		CPIM("message", "CPIM"),
@@ -1546,6 +1599,12 @@ public class MediaTypes {
 		
 	}
 
+	/**
+	 * Model media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Model implements MediaType {
 		
 		_3mf("model", "3mf"),
@@ -1584,6 +1643,12 @@ public class MediaTypes {
 		
 	}
 
+	/**
+	 * Multipart media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Multipart implements MediaType {
 		
 		appledouble("multipart", "appledouble"),
@@ -1613,6 +1678,12 @@ public class MediaTypes {
 		
 	}
 
+	/**
+	 * Text media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Text implements MediaType {
 		
 		_1d_interleaved_parityfec("text", "1d-interleaved-parityfec"),
@@ -1694,6 +1765,12 @@ public class MediaTypes {
 		
 	}
 
+	/**
+	 * Video media types
+	 * 
+	 * @author simon
+	 *
+	 */
 	public enum Video implements MediaType {
 		
 		_1d_interleaved_parityfec("video", "1d-interleaved-parityfec"),
@@ -1785,16 +1862,6 @@ public class MediaTypes {
 		public String getType() { return type; }
 		public String getTemplate() { return registry+"/"+type; }
 		
-	}
-
-
-
-
-
-
-
-	public MediaTypes() {
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -1,5 +1,11 @@
 package com.k2.Html5Builder.elements.attrValues;
 
+/**
+ * This enumeration defines the html language codes
+ * 
+ * @author simon
+ *
+ */
 public enum HtmlLanguageCode {
 	ABKHAZIAN("ab"),
 	AFAR("aa"),
@@ -202,6 +208,10 @@ public enum HtmlLanguageCode {
 	
 	String value;
 	HtmlLanguageCode(String value) { this.value = value; }
+	/**
+	 * Get the text value for this enumeration
+	 * @return	The text value of this enumeration
+	 */
 	public String getValue() { return value; }
 
 }
