@@ -1,18 +1,17 @@
 package com.k2.Html5Builder.elements.attrValues;
 
 /**
- * This enumeration defined the possible values for the dir attribute on 'bdo' elements
+ * This enumeration defines the possible values for boolean attributes
  * 
  * @author simon
  *
  */
-public enum Dir {
-	LTR("ltr"),
-	RTL("rtl"),
-	AUTO("auto");
+public enum TrueFalse {
+	TRUE("true"),
+	FALSE("false");
 	
 	String value;
-	Dir(String value) { this.value = value; }
+	TrueFalse(String value) { this.value = value; }
 	/**
 	 * Get the text value for this enumeration
 	 * @return	The text value of this enumeration

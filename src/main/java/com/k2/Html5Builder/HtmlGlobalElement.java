@@ -6,7 +6,10 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.Date;
 
+import com.k2.Html5Builder.elements.attrValues.Dir;
+import com.k2.Html5Builder.elements.attrValues.DropZone;
 import com.k2.Html5Builder.elements.attrValues.HtmlLanguageCode;
+import com.k2.Html5Builder.elements.attrValues.TrueFalse;
 import com.k2.XMLBuilder.XMLElement;
 import com.k2.XMLBuilder.XMLBuilder.NullAttributeHandling;
 
@@ -57,7 +60,13 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setContentEditable(String value) { attr("contenteditable", value); return (T) this; }
+	public T setContentEditable(TrueFalse value) { attr("contenteditable", value.getValue()); return (T) this; }
+	/**
+	 * Set the 'contenteditable' attribute
+	 * @param value	The value to set for the attribute
+	 * @return	This element for method chaining
+	 */
+	public T setContentEditable(Boolean value) { if (value) attr("contenteditable", TrueFalse.TRUE.getValue()); else attr("contenteditable", TrueFalse.FALSE.getValue()); return (T) this; }
 	/**
 	 * Set the 'contextmenu' attribute
 	 * @param value	The value to set for the attribute
@@ -69,25 +78,31 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setDir(String value) { attr("dir", value); return (T) this; }
+	public T setDir(Dir value) { attr("dir", value.getValue()); return (T) this; }
 	/**
 	 * Set the 'draggable' attribute
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setDraggable(String value) { attr("draggable", value); return (T) this; }
+	public T setDraggable(TrueFalse value) { attr("draggable", value.getValue()); return (T) this; }
+	/**
+	 * Set the 'draggable' attribute
+	 * @param value	The value to set for the attribute
+	 * @return	This element for method chaining
+	 */
+	public T setDraggable(Boolean value) { if (value) attr("draggable", TrueFalse.TRUE.getValue()); else attr("draggable", TrueFalse.FALSE.getValue()); return (T) this; }
 	/**
 	 * Set the 'dropzone' attribute
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setDropzone(String value) { attr("dropzone", value); return (T) this; }
+	public T setDropzone(DropZone value) { attr("dropzone", value.getValue()); return (T) this; }
 	/**
 	 * Set the 'hidden' attribute
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setHidden(String value) { attr("hidden", value); return (T) this; }
+	public T setHidden() { attr("hidden", null); return (T) this; }
 	/**
 	 * Set the 'lang' attribute to a valid language code
 	 * @param value	The value to set for the attribute
@@ -99,7 +114,13 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setSpellCheck(String value) { attr("spellcheck", value); return (T) this; }
+	public T setSpellCheck(TrueFalse value) { attr("spellcheck", value.getValue()); return (T) this; }
+	/**
+	 * Set the 'spellcheck' attribute
+	 * @param value	The value to set for the attribute
+	 * @return	This element for method chaining
+	 */
+	public T setSpellCheck(Boolean value) { if (value) attr("spellcheck", TrueFalse.TRUE.getValue()); else attr("spellcheck", TrueFalse.FALSE.getValue()); return (T) this; }
 	/**
 	 * Set the 'tabindex' attribute
 	 * @param value	The value to set for the attribute
@@ -117,7 +138,7 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
-	public T setTranslate(String value) { attr("translate", value); return (T) this; }
+	public T setTranslate(Boolean value) { if (value) removeClass("notranslate"); else addClass("notranslate"); return (T) this; }
 	/**
 	 * Set the 'style' attribute
 	 * @param value	The value to set for the attribute
@@ -135,8 +156,38 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 			attr("class", value);
 			 return (T) this;
 		}
+		for (String cls : curVal.split("\\s")) if (cls.equals(value)) return (T) this;
+
 		attr("class", curVal+" "+value); 
 		 return (T) this;
+	}
+	/**
+	 * Remove a class to the elements class list
+	 * @param value	The class name to add to the elements classes list
+	 * @return	This element for method chaining
+	 */
+	public T removeClass(String value) { 
+		String curVal = get("class");
+		if (curVal == null || "".equals(curVal)) {
+			 return (T) this;
+		}
+		String[] classes = curVal.split("\\s");
+		curVal = "";
+		for (String cls : classes) {
+			if (!cls.equals(value)) {
+				if (curVal.equals("")) {
+					curVal = cls;
+				} else {
+					curVal = curVal+" "+cls;
+				}
+			}
+ 		}
+		if (curVal.equals("")) {
+			remove("class");
+		} else {
+			attr("class", curVal);
+		}
+		return (T) this;
 	}
 	/**
 	 * Set a value for the defined data-* attribute

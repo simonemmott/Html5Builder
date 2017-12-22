@@ -22,6 +22,514 @@ public class Html5BuilderTest {
 	Html5Builder hb = new Html5Builder();
 	
 	@Test
+    public void pageTest()
+    {
+		
+		String expectedResult = "<!DOCTYPE html>\n" + 
+				"<html>\n" + 
+				"\t<head>\n" + 
+				"\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" + 
+				"\t</head>\n" + 
+				"\t<body/>\n" + 
+				"</html>\n";
+    	
+		StringWriter sw = new StringWriter();
+		hb.page().toHtml(sw);
+		
+		assertEquals(expectedResult, sw.toString());
+		
+		expectedResult = "<?xml version=\"0.9\" encoding=\"UTF-16\"?>\n" + 
+				"<!DOCTYPE html SYSTEM \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n" + 
+				"<html>\n" + 
+				"\t<head>\n" + 
+				"\t\t<meta http-equiv=\"refresh\" content=\"30\">\n" + 
+				"\t\t<meta name=\"viewport\" content=\"Some other viewport\">\n" + 
+				"\t\t<meta name=\"description\" content=\"This is the page description\">\n" + 
+				"\t\t<meta name=\"keywords\" content=\"more, words, hello, world, and, more, words, lots, and, lots, of, words\">\n" + 
+				"\t\t<base href=\"http://www.example.com/mySite/\" target=\"_parent\">\n" + 
+				"\t\t<meta name=\"author\" content=\"Yet another author\">\n" + 
+				"\t</head>\n" + 
+				"\t<body>\n" + 
+				"\t\t<a href=\"http://google.com\">Google</a>\n" + 
+				"\t\t<abbr title=\"World Health Organisation\">WHO</abbr>\n" + 
+				"\t</body>\n" + 
+				"</html>\n";
+		
+		sw = new StringWriter();
+
+		hb.page(true, false, true, null, "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd")
+		.setVersion("0.9")
+		.setEncoding("UTF-16")
+		.head
+			.refreshRate(30)
+			.viewport("Some other viewport")
+			.author("Simon Emmott")
+			.description("This is the page description")
+			.keywords("hello", "world", "and", "more", "words", "lots, and, lots, of, words")
+			.author("Joe Bloggs!")
+			.keywords("more", "words")
+			.base()
+				.setHref("http://www.example.com/mySite/")
+				.setTarget(Target.PARENT)
+				.up(HtmlHead.class)
+			.author("Yet another author")
+			.up(HtmlPage.class)
+		.body
+		.a()
+			.setHref("http://google.com")
+			.data("Google")
+			.up(HtmlBody.class)
+		.abbr()
+			.setTitle("World Health Organisation")
+			.text("WHO")
+			.page()
+		.toHtml(sw);
+
+		assertEquals(expectedResult, sw.toString());
+
+    }
+	
+	@Test
+    public void headersTest()
+    {
+    	
+		String expectedResult = "<!DOCTYPE html>\n" + 
+				"<html>\n" + 
+				"	<head>\n" + 
+				"		<base href=\"http://www.example.com/mySite/\" target=\"_parent\">\n" + 
+				"		<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" + 
+				"	</head>\n" + 
+				"	<body>\n" + 
+				"		<section>\n" + 
+				"			<h1>This is a header</h1>\n" + 
+				"			<div>\n" + 
+				"				<p>This is a paragraoh</p>\n" + 
+				"				<p>This is another paragraph</p>\n" + 
+				"				<section>\n" + 
+				"					<h2>This is a lower level header</h2>\n" + 
+				"					<div>\n" + 
+				"						<p>Yet more paragraphs</p>\n" + 
+				"						<section>\n" + 
+				"							<h3>Final Header</h3>\n" + 
+				"							<div>\n" + 
+				"								<p>This is the lowest parapgraph</p>\n" + 
+				"							</div>\n" + 
+				"						</section>\n" + 
+				"					</div>\n" + 
+				"				</section>\n" + 
+				"				<section>\n" + 
+				"					<h2>This is a lower level header</h2>\n" + 
+				"					<div>\n" + 
+				"						<p>Yet more paragraphs</p>\n" + 
+				"						<section>\n" + 
+				"							<h3>Final Header</h3>\n" + 
+				"							<div>\n" + 
+				"								<p>This is the lowest parapgraph</p>\n" + 
+				"							</div>\n" + 
+				"						</section>\n" + 
+				"					</div>\n" + 
+				"				</section>\n" + 
+				"			</div>\n" + 
+				"		</section>\n" + 
+				"	</body>\n" + 
+				"</html>\n";
+    	
+		StringWriter sw = new StringWriter();
+		hb.page()
+			.head
+				.base()
+				.setHref("http://www.example.com/mySite/")
+				.setTarget(Target.PARENT)
+				.page()
+			.body
+				.section()
+					.h().text("This is a header").up(HtmlSection.class)
+					.div()
+						.p().text("This is a paragraoh").up(HtmlDiv.class)
+						.p().text("This is another paragraph").up(HtmlDiv.class)
+						.section()
+							.h().text("This is a lower level header").up(HtmlSection.class)
+							.div()
+								.p().text("Yet more paragraphs").up(HtmlDiv.class)
+								.section()
+									.h().text("Final Header").up(HtmlSection.class)
+									.div()
+										.p().text("This is the lowest parapgraph").up(HtmlDiv.class) 
+										.up(HtmlSection.class)
+									.up(HtmlDiv.class)
+								.up(HtmlSection.class)
+							.up(HtmlDiv.class)
+						.section()
+							.h().text("This is a lower level header").up(HtmlSection.class)
+							.div()
+								.p().text("Yet more paragraphs").up(HtmlDiv.class)
+								.section()
+									.h().text("Final Header").up(HtmlSection.class)
+									.div()
+										.p().text("This is the lowest parapgraph").up(HtmlDiv.class) 
+										.page()
+			.toHtml(sw);
+		
+		assertEquals(expectedResult, sw.toString());
+		
+    }
+	
+	@Test
+    public void phrasingElementNoTimeTest()
+    {
+    	
+		assertEquals("<time><a/><audio/><canvas/><del/><ins/><map/><object/><video/></time>", 
+				hb.element(HtmlTime.class)
+				.a().up(HtmlTime.class)
+				.audio().up(HtmlTime.class)
+				.canvas().up(HtmlTime.class)
+				.del().up(HtmlTime.class)
+				.ins().up(HtmlTime.class)
+				.map().up(HtmlTime.class)
+				.object().up(HtmlTime.class)
+				.video().up(HtmlTime.class)
+				.toString());
+    }
+	
+	@Test
+    public void phrasingElementTest()
+    {
+    	
+		assertEquals("<abbr><a/><audio/><canvas/><del/><ins/><map/><object/><video/></abbr>", 
+				hb.element(HtmlAbbr.class)
+				.a().up(HtmlAbbr.class)
+				.audio().up(HtmlAbbr.class)
+				.canvas().up(HtmlAbbr.class)
+				.del().up(HtmlAbbr.class)
+				.ins().up(HtmlAbbr.class)
+				.map().up(HtmlAbbr.class)
+				.object().up(HtmlAbbr.class)
+				.video().up(HtmlAbbr.class)
+				.toString());
+    }
+	
+	@Test
+    public void flowElementTest()
+    {
+    	
+		assertEquals("<div><a/><address/><article/><aside/><audio/><blockquote/><canvas/><del/><details/><div/><dl/><fieldset/><figure/><footer/><form/><h1/><h2/><h3/><h4/><h5/><h6/><header/><hr/><ins/><main/><map/><nav/><object/><ol/><p/><picture/><pre/><section/><table/><ul/><video/></div>", 
+				hb.element(HtmlDiv.class)
+				.a().up(HtmlDiv.class)
+				.address().up(HtmlDiv.class)
+				.article().up(HtmlDiv.class)
+				.aside().up(HtmlDiv.class)
+				.audio().up(HtmlDiv.class)
+				.blockQuote().up(HtmlDiv.class)
+				.canvas().up(HtmlDiv.class)
+				.del().up(HtmlDiv.class)
+				.details().up(HtmlDiv.class)
+				.div().up(HtmlDiv.class)
+				.dl().up(HtmlDiv.class)
+				.fieldSet().up(HtmlDiv.class)
+				.figure().up(HtmlDiv.class)
+				.footer().up(HtmlDiv.class)
+				.form().up(HtmlDiv.class)
+				.h1().up(HtmlDiv.class)
+				.h2().up(HtmlDiv.class)
+				.h3().up(HtmlDiv.class)
+				.h4().up(HtmlDiv.class)
+				.h5().up(HtmlDiv.class)
+				.h6().up(HtmlDiv.class)
+				.header().up(HtmlDiv.class)
+				.hr().up(HtmlDiv.class)
+				.ins().up(HtmlDiv.class)
+				.main().up(HtmlDiv.class)
+				.map().up(HtmlDiv.class)
+				.nav().up(HtmlDiv.class)
+				.object().up(HtmlDiv.class)
+				.ol().up(HtmlDiv.class)
+				.p().up(HtmlDiv.class)
+				.picture().up(HtmlDiv.class)
+				.pre().up(HtmlDiv.class)
+				.section().up(HtmlDiv.class)
+				.table().up(HtmlDiv.class)
+				.ul().up(HtmlDiv.class)
+				.video().up(HtmlDiv.class)
+				.toString());
+    }
+	
+	@Test
+    public void styledFlowElementTest()
+    {
+    	
+		assertEquals("<div><style type=\"text/css\"/></div>", 
+				hb.element(HtmlDiv.class)
+				.style().up(HtmlDiv.class)
+				.toString());
+    }
+	
+	@Test
+    public void restrictedFlowElementTest()
+    {
+    	
+		assertEquals("<footer><a/><article/><aside/><audio/><blockquote/><canvas/><del/><details/><div/><dl/><fieldset/><figure/><form/><h1/><h2/><h3/><h4/><h5/><h6/><hr/><ins/><main/><map/><nav/><object/><ol/><p/><picture/><pre/><section/><table/><ul/><video/></footer>", 
+				hb.element(HtmlFooter.class)
+				.a().up(HtmlFooter.class)
+				.article().up(HtmlFooter.class)
+				.aside().up(HtmlFooter.class)
+				.audio().up(HtmlFooter.class)
+				.blockQuote().up(HtmlFooter.class)
+				.canvas().up(HtmlFooter.class)
+				.del().up(HtmlFooter.class)
+				.details().up(HtmlFooter.class)
+				.div().up(HtmlFooter.class)
+				.dl().up(HtmlFooter.class)
+				.fieldSet().up(HtmlFooter.class)
+				.figure().up(HtmlFooter.class)
+				.form().up(HtmlFooter.class)
+				.h1().up(HtmlFooter.class)
+				.h2().up(HtmlFooter.class)
+				.h3().up(HtmlFooter.class)
+				.h4().up(HtmlFooter.class)
+				.h5().up(HtmlFooter.class)
+				.h6().up(HtmlFooter.class)
+				.hr().up(HtmlFooter.class)
+				.ins().up(HtmlFooter.class)
+				.main().up(HtmlFooter.class)
+				.map().up(HtmlFooter.class)
+				.nav().up(HtmlFooter.class)
+				.object().up(HtmlFooter.class)
+				.ol().up(HtmlFooter.class)
+				.p().up(HtmlFooter.class)
+				.picture().up(HtmlFooter.class)
+				.pre().up(HtmlFooter.class)
+				.section().up(HtmlFooter.class)
+				.table().up(HtmlFooter.class)
+				.ul().up(HtmlFooter.class)
+				.video().up(HtmlFooter.class)
+				.toString());
+    }
+	
+	@Test
+    public void veryRestrictedFlowElementTest()
+    {
+    	
+		assertEquals("<address><a/><article/><aside/><audio/><blockquote/><canvas/><del/><details/><div/><dl/><fieldset/><figure/><form/><hr/><ins/><main/><map/><nav/><object/><ol/><p/><picture/><pre/><table/><ul/><video/></address>", 
+				hb.element(HtmlAddress.class)
+				.a().up(HtmlAddress.class)
+				.article().up(HtmlAddress.class)
+				.aside().up(HtmlAddress.class)
+				.audio().up(HtmlAddress.class)
+				.blockQuote().up(HtmlAddress.class)
+				.canvas().up(HtmlAddress.class)
+				.del().up(HtmlAddress.class)
+				.details().up(HtmlAddress.class)
+				.div().up(HtmlAddress.class)
+				.dl().up(HtmlAddress.class)
+				.fieldSet().up(HtmlAddress.class)
+				.figure().up(HtmlAddress.class)
+				.form().up(HtmlAddress.class)
+				.hr().up(HtmlAddress.class)
+				.ins().up(HtmlAddress.class)
+				.main().up(HtmlAddress.class)
+				.map().up(HtmlAddress.class)
+				.nav().up(HtmlAddress.class)
+				.object().up(HtmlAddress.class)
+				.ol().up(HtmlAddress.class)
+				.p().up(HtmlAddress.class)
+				.picture().up(HtmlAddress.class)
+				.pre().up(HtmlAddress.class)
+				.table().up(HtmlAddress.class)
+				.ul().up(HtmlAddress.class)
+				.video().up(HtmlAddress.class)
+				.toString());
+    }
+	
+	@Test
+    public void commonPhrasingElementNoTimeTest()
+    {
+    	
+		assertEquals("<time><abbr/><area/><b/><bdi/><bdo/><br/><button/><cite/><datalist/><dfn/><em/><embed/><i/><iframe/><img/><input/><kbd/><label/><mark/><meter/><noscript/><output/><progress/><q/><ruby/><s/><samp/><script/><select/><small/><span/><strong/><sub/><sup/><textarea/><u/><var/><wbr/></time>", 
+				hb.element(HtmlTime.class)
+				.abbr().up(HtmlTime.class)
+				.area().up(HtmlTime.class)
+				.b().up(HtmlTime.class)
+				.bdi().up(HtmlTime.class)
+				.bdo().up(HtmlTime.class)
+				.br()
+				.button().up(HtmlTime.class)
+				.cite().up(HtmlTime.class)
+				.dataList().up(HtmlTime.class)
+				.dfn().up(HtmlTime.class)
+				.em().up(HtmlTime.class)
+				.embed().up(HtmlTime.class)
+				.i().up(HtmlTime.class)
+				.iframe().up(HtmlTime.class)
+				.img().up(HtmlTime.class)
+				.input().up(HtmlTime.class)
+				.kbd().up(HtmlTime.class)
+				.label().up(HtmlTime.class)
+				.mark().up(HtmlTime.class)
+				.meter().up(HtmlTime.class)
+				.noScript().up(HtmlTime.class)
+				.output().up(HtmlTime.class)
+				.progress().up(HtmlTime.class)
+				.q().up(HtmlTime.class)
+				.ruby().up(HtmlTime.class)
+				.s().up(HtmlTime.class)
+				.samp().up(HtmlTime.class)
+				.script().up(HtmlTime.class)
+				.select().up(HtmlTime.class)
+				.small().up(HtmlTime.class)
+				.span().up(HtmlTime.class)
+				.strong().up(HtmlTime.class)
+				.sub().up(HtmlTime.class)
+				.sup().up(HtmlTime.class)
+				.textArea().up(HtmlTime.class)
+				.u().up(HtmlTime.class)
+				.var().up(HtmlTime.class)
+				.wbr()
+				.toString());
+    }
+	
+	@Test
+    public void commonPhrasingElementTest()
+    {
+    	
+		assertEquals("<a><abbr/><area/><b/><bdi/><bdo/><br/><button/><cite/><datalist/><dfn/><em/><embed/><i/><iframe/><img/><input/><kbd/><label/><mark/><meter/><noscript/><output/><progress/><q/><ruby/><s/><samp/><script/><select/><small/><span/><strong/><sub/><sup/><textarea/><time/><u/><var/><wbr/></a>", 
+				hb.element(HtmlA.class)
+				.abbr().up(HtmlA.class)
+				.area().up(HtmlA.class)
+				.b().up(HtmlA.class)
+				.bdi().up(HtmlA.class)
+				.bdo().up(HtmlA.class)
+				.br()
+				.button().up(HtmlA.class)
+				.cite().up(HtmlA.class)
+				.dataList().up(HtmlA.class)
+				.dfn().up(HtmlA.class)
+				.em().up(HtmlA.class)
+				.embed().up(HtmlA.class)
+				.i().up(HtmlA.class)
+				.iframe().up(HtmlA.class)
+				.img().up(HtmlA.class)
+				.input().up(HtmlA.class)
+				.kbd().up(HtmlA.class)
+				.label().up(HtmlA.class)
+				.mark().up(HtmlA.class)
+				.meter().up(HtmlA.class)
+				.noScript().up(HtmlA.class)
+				.output().up(HtmlA.class)
+				.progress().up(HtmlA.class)
+				.q().up(HtmlA.class)
+				.ruby().up(HtmlA.class)
+				.s().up(HtmlA.class)
+				.samp().up(HtmlA.class)
+				.script().up(HtmlA.class)
+				.select().up(HtmlA.class)
+				.small().up(HtmlA.class)
+				.span().up(HtmlA.class)
+				.strong().up(HtmlA.class)
+				.sub().up(HtmlA.class)
+				.sup().up(HtmlA.class)
+				.textArea().up(HtmlA.class)
+				.time().up(HtmlA.class)
+				.u().up(HtmlA.class)
+				.var().up(HtmlA.class)
+				.wbr()
+				.toString());
+    }
+	
+	@Test
+    public void elementTest()
+    {
+    	
+		assertEquals("<a onClick=\"click\" onSubmit=\"submit\" onKeyPress=\"keyPress\" onSearch=\"search\" onReset=\"reset\" onDragEnd=\"dragEnd\" onLoadedData=\"loadedData\" onMouseOut=\"mouseOut\" onEnded=\"ended\" onDblClick=\"dblClick\" onDurationChange=\"durationChange\" onCanPlayThrough=\"canPlayThrough\" onDragStart=\"dragStart\" onSuspend=\"suspend\" onToggle=\"toggle\" onChange=\"change\" onTimeUpdate=\"timeUpdate\" onContextMenu=\"contextMenu\" onSeeking=\"seeking\" onLoadStart=\"loadStart\" onDrag=\"drag\" onCanPlay=\"canPlay\" onCut=\"cut\" onPlay=\"play\" onFocus=\"focus\" onLoadedMetaData=\"loadedMetaData\" onRateChange=\"rateChange\" onCueChange=\"cueChange\" onWheel=\"wheel\" onKeyDown=\"keyDown\" onWaiting=\"waiting\" onProgress=\"progress\" onDragOver=\"dragOver\" onPause=\"pause\" onDragLeave=\"dragLeave\" onDragEnter=\"dragEnter\" onSelect=\"select\" onScroll=\"scroll\" onAbort=\"abort\" onMouseDown=\"mouseDown\" onEmptied=\"emptiedString\" onMouseOver=\"mouseOver\" onKeyUp=\"keyUp\" onError=\"error\" onShow=\"show\" onSeek=\"seek\" onPaste=\"paste\" onInput=\"input\" onVolumeChange=\"volumeChange\" onCopy=\"copy\" onInvalid=\"invalid\" onStalled=\"stalled\" onBlur=\"blur\" onPlaying=\"playing\" onDrop=\"drop\" onMouseUp=\"mouseUp\"/>", 
+				hb.element(HtmlA.class)
+				.onAbort("abort")
+				.onBlur("blur")
+				.onCanPlay("canPlay")
+				.onCanPlayThrough("canPlayThrough")
+				.onChange("change")
+				.onClick("click")
+				.onContextMenu("contextMenu")
+				.onCopy("copy")
+				.onCueChange("cueChange")
+				.onCut("cut")
+				.onDblClick("dblClick")
+				.onDrag("drag")
+				.onDragEnd("dragEnd")
+				.onDragEnter("dragEnter")
+				.onDragLeave("dragLeave")
+				.onDragOver("dragOver")
+				.onDragStart("dragStart")
+				.onDrop("drop")
+				.onDurationChange("durationChange")
+				.onEmptied("emptiedString")
+				.onEnded("ended")
+				.onError("error")
+				.onFocus("focus")
+				.onInput("input")
+				.onInvalid("invalid")
+				.onKeyDown("keyDown")
+				.onKeyPress("keyPress")
+				.onKeyUp("keyUp")
+				.onLoadedData("loadedData")
+				.onLoadedMetaData("loadedMetaData")
+				.onLoadStart("loadStart")
+				.onMouseDown("mouseDown")
+				.onMouseMove("mouseMove")
+				.onMouseOut("mouseOut")
+				.onMouseOver("mouseOver")
+				.onMouseUp("mouseUp")
+				.onPaste("paste")
+				.onPause("pause")
+				.onPlay("play")
+				.onPlaying("playing")
+				.onProgress("progress")
+				.onRateChange("rateChange")
+				.onReset("reset")
+				.onScroll("scroll")
+				.onSearch("search")
+				.onSeek("seek")
+				.onSeeking("seeking")
+				.onSelect("select")
+				.onShow("show")
+				.onStalled("stalled")
+				.onSubmit("submit")
+				.onSuspend("suspend")
+				.onTimeUpdate("timeUpdate")
+				.onToggle("toggle")
+				.onVolumeChange("volumeChange")
+				.onWaiting("waiting")
+				.onWheel("wheel")
+				.toString());
+    }
+	
+	@Test
+    public void globalElementTest()
+    {
+    	
+		assertEquals("<a contenteditable=\"true\" hidden tabindex=\"1\" data-myOtherData=\"my other data value\" dir=\"auto\" title=\"Title\" dropzone=\"copy\" accesskey=\"key\" draggable=\"false\" spellcheck=\"true\" data-myData=\"my data value\" style=\"color:blue;text-align:centre\" id=\"id\" lang=\"de\" class=\"class notranslate\"/>", 
+				hb.element(HtmlA.class)
+				.setId("id")
+				.setAccesskey("key")
+				.setClass("html class")
+				.setContentEditable(true)
+				.setDir(Dir.AUTO)
+				.setDraggable(TrueFalse.FALSE)
+				.setDropzone(DropZone.COPY)
+				.setHidden()
+				.setLang(HtmlLanguageCode.GERMAN)
+				.setSpellCheck(TrueFalse.TRUE)
+				.setStyle("color:blue")
+				.setTabIndex(1)
+				.setTitle("Title")
+				.setTranslate(false)
+				.addClass("class")
+				.removeClass("html")
+				.addData("myData", "my data value")
+				.addData("myOtherData", "my other data value")
+				.addStyle("text-align", "centre")
+				.toString());
+    }
+	
+	@Test
     public void aTest()
     {
     	
@@ -103,6 +611,14 @@ public class Html5BuilderTest {
 				.setPreload(Preload.AUTO)
 				.setSrc("src")
 				.toString());
+		
+		assertEquals("<audio><source/><track/></audio>", 
+				hb.element(HtmlAudio.class)
+				.source().up(HtmlAudio.class)
+				.track().up(HtmlAudio.class)
+				.toString());
+		
+		
     }
 	
 	@Test
@@ -254,6 +770,12 @@ public class Html5BuilderTest {
 				hb.element(HtmlColGroup.class)
 				.setSpan(1)
 				.toString());
+
+		assertEquals("<colgroup><col/></colgroup>", 
+				hb.element(HtmlColGroup.class)
+				.col().up(HtmlColGroup.class)
+				.toString());
+
     }
 	
 	@Test
@@ -262,6 +784,11 @@ public class Html5BuilderTest {
 
 		assertEquals("<datalist/>", 
 				hb.element(HtmlDataList.class)
+				.toString());
+
+		assertEquals("<datalist><option/></datalist>", 
+				hb.element(HtmlDataList.class)
+				.option().up(HtmlDataList.class)
 				.toString());
     }
 	
@@ -293,6 +820,12 @@ public class Html5BuilderTest {
 				hb.element(HtmlDetails.class)
 				.setOpen()
 				.toString());
+
+		assertEquals("<details><summary/></details>", 
+				hb.element(HtmlDetails.class)
+				.summary().up(HtmlDetails.class)
+				.toString());
+		
     }
 	
 	@Test
@@ -320,6 +853,13 @@ public class Html5BuilderTest {
 		assertEquals("<dl/>", 
 				hb.element(HtmlDl.class)
 				.toString());
+
+		assertEquals("<dl><dd/><dt/></dl>", 
+				hb.element(HtmlDl.class)
+				.dd().up(HtmlDl.class)
+				.dt().up(HtmlDl.class)
+				.toString());
+
     }
 	
 	@Test
@@ -363,6 +903,12 @@ public class Html5BuilderTest {
 				.setForm("form")
 				.setName("name")
 				.toString());
+
+		assertEquals("<fieldset><legend/></fieldset>", 
+				hb.element(HtmlFieldSet.class)
+				.legend().up(HtmlFieldSet.class)
+				.toString());
+
     }
 	
 	@Test
@@ -489,6 +1035,17 @@ public class Html5BuilderTest {
 				.title("Title")
 				.viewport("Viewport")
 				.toString());
+		
+		assertEquals("<head><base/><link/><meta/><noscript/><script/><title/></head>", 
+				hb.element(HtmlHead.class)
+				.base().up(HtmlHead.class)
+				.link().up(HtmlHead.class)
+				.meta().up(HtmlHead.class)
+				.noScript().up(HtmlHead.class)
+				.script().up(HtmlHead.class)
+				.title().up(HtmlHead.class)
+				.toString());
+
     }
 	
 	@Test
@@ -758,6 +1315,12 @@ public class Html5BuilderTest {
 				.setUseMap("map")
 				.setWidth(2)
 				.toString());
+
+		assertEquals("<object><param/></object>", 
+				hb.element(HtmlObject.class)
+				.param().up(HtmlObject.class)
+				.toString());
+
     }
 	
 	@Test
@@ -770,6 +1333,12 @@ public class Html5BuilderTest {
 				.setStart(1)
 				.setType(OlType.LOWER_CHAR)
 				.toString());
+
+		assertEquals("<ol><li/></ol>", 
+				hb.element(HtmlOl.class)
+				.li().up(HtmlOl.class)
+				.toString());
+
     }
 	
 	@Test
@@ -781,6 +1350,12 @@ public class Html5BuilderTest {
 				.setDisabled()
 				.setLabel("label")
 				.toString());
+
+		assertEquals("<optgroup><option/></optgroup>", 
+				hb.element(HtmlOptGroup.class)
+				.option().up(HtmlOptGroup.class)
+				.toString());
+
     }
 	
 	@Test
@@ -835,6 +1410,15 @@ public class Html5BuilderTest {
 		assertEquals("<picture/>", 
 				hb.element(HtmlPicture.class)
 				.toString());
+
+		assertEquals("<picture><img/><noscript/><script/><source/></picture>", 
+				hb.element(HtmlPicture.class)
+				.img().up(HtmlPicture.class)
+				.noScript().up(HtmlPicture.class)
+				.script().up(HtmlPicture.class)
+				.source().up(HtmlPicture.class)
+				.toString());
+
     }
 	
 	@Test
@@ -892,6 +1476,13 @@ public class Html5BuilderTest {
 		assertEquals("<ruby/>", 
 				hb.element(HtmlRuby.class)
 				.toString());
+
+		assertEquals("<ruby><rp/><rt/></ruby>", 
+				hb.element(HtmlRuby.class)
+				.rp().up(HtmlRuby.class)
+				.rt().up(HtmlRuby.class)
+				.toString());
+
     }
 	
 	@Test
@@ -949,6 +1540,13 @@ public class Html5BuilderTest {
 				.setRequired()
 				.setSize(10)
 				.toString());
+
+		assertEquals("<select><optgroup/><option/></select>", 
+				hb.element(HtmlSelect.class)
+				.optGroup().up(HtmlSelect.class)
+				.option().up(HtmlSelect.class)
+				.toString());
+
     }
 	
 	@Test
@@ -1037,6 +1635,17 @@ public class Html5BuilderTest {
 		assertEquals("<table/>", 
 				hb.element(HtmlTable.class)
 				.toString());
+
+		assertEquals("<table><caption/><colgroup/><tbody/><tfoot/><thead/><tr/></table>", 
+				hb.element(HtmlTable.class)
+				.caption().up(HtmlTable.class)
+				.colGroup().up(HtmlTable.class)
+				.tBody().up(HtmlTable.class)
+				.tFoot().up(HtmlTable.class)
+				.tHead().up(HtmlTable.class)
+				.tr().up(HtmlTable.class)
+				.toString());
+
     }
 	
 	@Test
@@ -1046,6 +1655,13 @@ public class Html5BuilderTest {
 		assertEquals("<tbody/>", 
 				hb.element(HtmlTBody.class)
 				.toString());
+
+		assertEquals("<tbody><tr/></tbody>", 
+				hb.element(HtmlTBody.class)
+				.tr().up(HtmlTBody.class)
+				.toString());
+
+
     }
 	
 	@Test
@@ -1087,6 +1703,12 @@ public class Html5BuilderTest {
 		assertEquals("<tfoot/>", 
 				hb.element(HtmlTFoot.class)
 				.toString());
+
+		assertEquals("<tfoot><tr/></tfoot>", 
+				hb.element(HtmlTFoot.class)
+				.tr().up(HtmlTFoot.class)
+				.toString());
+
     }
 	
 	@Test
@@ -1110,6 +1732,12 @@ public class Html5BuilderTest {
 		assertEquals("<thead/>", 
 				hb.element(HtmlTHead.class)
 				.toString());
+
+		assertEquals("<thead><tr/></thead>", 
+				hb.element(HtmlTHead.class)
+				.tr().up(HtmlTHead.class)
+				.toString());
+
     }
 	
 	@Test
@@ -1138,6 +1766,13 @@ public class Html5BuilderTest {
 		assertEquals("<tr/>", 
 				hb.element(HtmlTr.class)
 				.toString());
+
+		assertEquals("<tr><th/><td/></tr>", 
+				hb.element(HtmlTr.class)
+				.th().up(HtmlTr.class)
+				.td().up(HtmlTr.class)
+				.toString());
+
     }
 	
 	@Test
@@ -1170,6 +1805,12 @@ public class Html5BuilderTest {
 		assertEquals("<ul/>", 
 				hb.element(HtmlUl.class)
 				.toString());
+
+		assertEquals("<ul><li/></ul>", 
+				hb.element(HtmlUl.class)
+				.li().up(HtmlUl.class)
+				.toString());
+
     }
 	
 	@Test
@@ -1196,6 +1837,13 @@ public class Html5BuilderTest {
 				.setSrc("src")
 				.setWidth(30)
 				.toString());
+
+		assertEquals("<video><source/><track/></video>", 
+				hb.element(HtmlVideo.class)
+				.source().up(HtmlVideo.class)
+				.track().up(HtmlVideo.class)
+				.toString());
+
     }
 	
 	@Test

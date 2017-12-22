@@ -6,13 +6,13 @@ package com.k2.Html5Builder.elements.attrValues;
  * @author simon
  *
  */
-public enum Dir {
-	LTR("ltr"),
-	RTL("rtl"),
-	AUTO("auto");
+public enum DropZone {
+	COPY("copy"),
+	MOVE("move"),
+	LINK("link");
 	
 	String value;
-	Dir(String value) { this.value = value; }
+	DropZone(String value) { this.value = value; }
 	/**
 	 * Get the text value for this enumeration
 	 * @return	The text value of this enumeration
