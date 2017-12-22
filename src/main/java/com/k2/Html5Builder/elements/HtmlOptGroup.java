@@ -31,7 +31,7 @@ public class HtmlOptGroup extends HtmlElement<HtmlOptGroup> {
 	 * @param hb		The html builder that created the element
 	 */
 	public HtmlOptGroup(Html5Builder hb) {
-		super(hb, "optGroup");		
+		super(hb, "optgroup");		
 	}
 
 	/**

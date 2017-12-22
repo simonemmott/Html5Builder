@@ -21,7 +21,7 @@ public class HtmlLi extends HtmlFlowElement<HtmlLi> {
 	 * @return This element for method chaining
 	 */
 	public HtmlLi setValue(Integer value) { 
-		if (((XMLElement)parent).getTag().equals("ol")) {
+		if (parent==null || ((XMLElement)parent).getTag().equals("ol")) {
 			attr("value", value.toString());  
 		} else {
 			warning("value is only applicable to 'li' elements that are children of 'ol' elements");

@@ -2,8 +2,10 @@ package com.k2.Html5Builder.elements;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlFlowElement;
+import com.k2.Html5Builder.MediaTypes.MediaType;
 import com.k2.Html5Builder.MediaQueryBuilder.MediaQuery;
 import com.k2.Html5Builder.elements.attrValues.ARel;
+import com.k2.Html5Builder.elements.attrValues.HtmlLanguageCode;
 import com.k2.Html5Builder.elements.attrValues.Target;
 import com.k2.Html5Builder.elements.attrValues.Type;
 
@@ -35,7 +37,7 @@ public class HtmlA extends HtmlFlowElement<HtmlA> {
 	 * @param value The value to set for the attribute
 	 * @return This element for method chaining
 	 */
-	public HtmlA setHrefLang(String value) { attr("hrefLang", value); return this; }
+	public HtmlA setHrefLang(HtmlLanguageCode value) { attr("hrefLang", value.getValue()); return this; }
 	/**
 	 * set the 'media' attribute to the given value
 	 * 
@@ -70,7 +72,7 @@ public class HtmlA extends HtmlFlowElement<HtmlA> {
 	 * @param value The value to set for the attribute
 	 * @return This element for method chaining
 	 */
-	public HtmlA setType(Type value) { attr("type", value.getValue()); return this; }
+	public HtmlA setType(MediaType value) { attr("type", value.getTemplate()); return this; }
 
 	/**
 	 * Create the element instance setting the appropriate tag and defining he html builder that

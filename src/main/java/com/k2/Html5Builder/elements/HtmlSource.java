@@ -35,12 +35,6 @@ public class HtmlSource extends HtmlElement<HtmlSource> {
 	 */
 	public HtmlSource setMedia(MediaQuery value) { attr("media", value.query()); return this; }
 	/**
-	 * set the 'multiple' attribute on
-	 * 
-	 * @return This element for method chaining
-	 */
-	public HtmlSource setMultiple() { attr("multiple", null); return this; }
-	/**
 	 * set the 'sizes' attribute to the given value
 	 * 
 	 * @param value The value to set for the attribute

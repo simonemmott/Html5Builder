@@ -49,7 +49,7 @@ public class HtmlVideo extends HtmlFlowElement<HtmlVideo> {
 	 * @param value The value to set for the attribute
 	 * @return This element for method chaining
 	 */
-	public HtmlVideo setPreLoad(Preload value) { attr("src", value.getValue()); return this; }
+	public HtmlVideo setPreLoad(Preload value) { attr("preLoad", value.getValue()); return this; }
 	/**
 	 * set the 'src' attribute to the given value
 	 * 

@@ -9,7 +9,7 @@ public enum DateFormat {
 	/**
 	 * Date and time with time zone
 	 */
-	DATE_TIME_ZONE("yyyy-MM-dd HH:mm:sszzzz"),
+	DATE_TIME_ZONE("yyyy-MM-dd HH:mm:ssz"),
 	/**
 	 * Date and time without time zone
 	 */

@@ -2,6 +2,7 @@ package com.k2.Html5Builder.elements;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlElement;
+import com.k2.Html5Builder.elements.attrValues.HtmlLanguageCode;
 import com.k2.Html5Builder.elements.attrValues.Kind;
 
 /**
@@ -45,7 +46,7 @@ public class HtmlTrack extends HtmlElement<HtmlTrack> {
 	 * @param value The value to set for the attribute
 	 * @return This element for method chaining
 	 */
-	public HtmlTrack setSrcLang(String value) { attr("srcLang", value); return this; }
+	public HtmlTrack setSrcLang(HtmlLanguageCode value) { attr("srcLang", value.getValue()); return this; }
 
 	/**
 	 * Create the element instance setting the appropriate tag and defining the html builder that
