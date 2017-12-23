@@ -89,13 +89,65 @@ The assembled document or snippet is output using the `toHtml(...)` methods.
 HTML pages define meta data about the page. Html5Builder provides methods on the head element of the page to set common page meta data. The head element provides the following methods:
 
 1. `keywords(String ... keywords)`
-
 This method sets the keywords for the page. Duplicate words are automatically removed  and repeated calls to this method add to existing keywords. A string containing several words separated by commas or white space is treated as separate words.
 1. `description(String description)`
+This method sets the description of the page. Duplicate calls to this method replace the description of the page.
 1. `title(String title)`
+This method sets the title of the page. Duplicate calls to this method replace the title of the page.
 1. `author(String author)`
+This method sets the author of the page. Duplicate calls to this method replace the author of the page.
 1. `refreshRate(Integer refreshRate)`
+This method identifies that the page should automatically refresh and sets the refresh rate in seconds.
 1. `viewport(String viewport)`
+This method sets the contents of the viewport meta tag to the given string. If this method is not called then the default viewport meta tag is used. The default viewport meta tag causes the viewport to automatically adjust to the medias screen size.
+1. `base(String href)`
+This method set the base URL for the page. Duplicate calls to this method replace the base href for the page.
+
+The code below shows the invocation of these methods.
+```java
+Html5Builder hb = new Html5Builder();
+
+hb.page()
+	.head
+		.title("This is the page title")
+		.author("Simon Emmott")
+		.description("This is the page description")
+		.keywords("hello", "world", "and", "more", "words", "lots, and, lots, of, words")
+		.keywords("many", "words")
+		.base("http://www.example.com/mySite/")
+		.page()
+	.body
+		.a()
+			.setHref("http://google.com")
+			.t("Google")
+			.up(HtmlBody.class)
+		.abbr()
+			.setTitle("World Health Organisation")
+			.text("WHO")
+			.page()
+.toHtml(new PrintWriter(System.out)).flush();
+```
+Which produces the following output
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>This is the page title</title>
+		<meta name="author" content="Simon Emmott">
+		<meta name="description" content="This is the page description">
+		<meta name="keywords" content="lots, world, and, more, of, words, hello, many">
+		<base href="http://www.example.com/mySite/">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<a href="http://google.com">Google</a>
+		<abbr title="World Health Organisation">WHO</abbr>
+	</body>
+</html>
+```
+
+
+All the above methods can be replicated using the normal API methods
 
 
 

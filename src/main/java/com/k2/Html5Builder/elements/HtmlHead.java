@@ -127,6 +127,25 @@ public class HtmlHead extends HtmlGlobalElement<HtmlHead> {
 	}
 	
 	/**
+	 * This method sets the author for this html page
+	 * @param author		The author for this html page
+	 * @return	This head element for method chaining
+	 */
+	@SuppressWarnings("rawtypes")
+	public HtmlHead base(String href) {
+		if (contents != null) {
+			XMLNode node = null;
+			for (XMLNode el : contents) {
+				HtmlGlobalElement html = (HtmlGlobalElement)el;
+				if (html.matches("base")) { node = el; break; }
+			}
+			if (node != null) contents.remove(node);
+		}
+		add(((Html5Builder)xb).element(HtmlBase.class).setHref(href));
+		return this;
+	}
+	
+	/**
 	 * This method sets the refresh rate for this html page.
 	 * @param refreshRate  The number of seconds after which this page will automatically refresh
 	 * @return	This html head element for method chaining
