@@ -1,6 +1,8 @@
 package com.k2.Html5Builder.elements;
 
 import java.io.PrintWriter;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.k2.Html5Builder.Html5Builder;
 import com.k2.Html5Builder.HtmlGlobalElement;
@@ -34,13 +36,6 @@ public class HtmlHead extends HtmlGlobalElement<HtmlHead> {
 	 */
 	@SuppressWarnings("rawtypes")
 	public HtmlHead keywords(String ... keywords) {
-		StringBuilder sb = new StringBuilder();
-		boolean first = true;
-		for (String keyword : keywords) {
-			if (!first) sb.append(", ");
-			sb.append(keyword);
-			first = false;
-		}
 		XMLNode node = null;
 		if (contents != null) {
 			for (XMLNode el : contents) {
@@ -48,13 +43,26 @@ public class HtmlHead extends HtmlGlobalElement<HtmlHead> {
 				if (html.matches("meta[name="+MetaName.KEYWORDS.getValue()+"]")) { node = el; break; }
 			}
 		}
+		Set<String> words = new HashSet<String>();
 		if (node != null) {
 			HtmlMeta meta = (HtmlMeta)node;
 			String current = meta.get("content");
 			if (current != null && !"".equals(current)) {
-				sb.append(", ").append(current);
+				for (String word: current.split(",\\s*")) words.add(word);
 			}
-			meta.setContent(sb.toString());
+		}
+		for (String keyword : keywords) {
+			for (String word: keyword.split(",\\s*")) words.add(word);
+		}
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		for (String word : words) {
+			if (!first) sb.append(", ");
+			sb.append(word);
+			first = false;
+		}
+		if (node != null) {
+			((HtmlMeta)node).setContent(sb.toString());
 		} else {
 			add(((Html5Builder)xb).element(HtmlMeta.class).setName(MetaName.KEYWORDS).setContent(sb.toString()));
 		}
