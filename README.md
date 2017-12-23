@@ -20,7 +20,7 @@ Html5Builder hb = new Html5Builder();
 hb.page().toHtml(new PrintWriter(System.out)).flush();
 ```
 Produces the following HTML docuement.
-```
+```html
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,6 +28,33 @@ Produces the following HTML docuement.
 	</head>
 	<body/>
 </html>
+```
+Note the automcatic inclusion of the DOCTYPE tag defining an HTML 5 document and the automatic inclusion of the head and body tags and the meta viewport specification causing the viewport to automatically scale with the device width.
+
+The Html5Builder can easily generate HTML snippets.  An HTML snippet is an internally valid section of HTML with a single root element.
+
+This code:
+```java
+Html5Builder hb = new Html5Builder();
+
+hb.element(HtmlDiv.class)
+	.setClass("myClass")
+	.setId("myDiv")
+	.a()
+		.setHref("http://www.google.com")
+		.t("Google")
+		.up(HtmlDiv.class)
+	.p()
+		.t("The above hyperlink links to www.googl.com")
+		.up(HtmlDiv.class)
+	.toHtml(new PrintWriter(System.out)).flush();
+```
+Produces the following HTML snippet.
+```html
+<div id="myDiv" class="myClass">
+	<a href="http://www.google.com">Google</a>
+	<p>The above hyperlink links to www.googl.com</p>
+</div>
 ```
 
 ## Getting Started
@@ -40,7 +67,7 @@ Maven users can add this project using the following additions to the pom.xml fi
     ...
     <dependency>
         <groupId>com.k2</groupId>
-        <artifactId>CssSelectorParser</artifactId>
+        <artifactId>Html5Builder</artifactId>
         <version>0.1.0</version>
     </dependency>
     ...
