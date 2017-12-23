@@ -21,9 +21,8 @@ public class BasicPageExample {
 				.description("This is the page description")
 				.keywords("hello", "world", "and", "more", "words", "lots, and, lots, of, words")
 				.keywords("many", "words")
-				.base()
-					.setHref("http://www.example.com/mySite/")
-					.page()
+				.base("http://www.example.com/mySite/")
+				.page()
 			.body
 				.a()
 					.setHref("http://google.com")
