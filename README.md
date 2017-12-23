@@ -88,8 +88,8 @@ The assembled document or snippet is output using the `toHtml(...)` methods.
 
 HTML pages define meta data about the page. Html5Builder provides methods on the head element of the page to set common page meta data. The head element provides the following methods:
 
-1. `keywords(String ... keywords)`
-This method set the keywords for the page. Duplicate words are automatically removed  and repeated calls to this method add to existing keywords. A string containing several words separated by commas or white space is treated as separate words.
+1. ###`keywords(String ... keywords)`
+This method sets the keywords for the page. Duplicate words are automatically removed  and repeated calls to this method add to existing keywords. A string containing several words separated by commas or white space is treated as separate words.
 1. `description(String description)`
 1. `title(String title)`
 1. `author(String author)`
