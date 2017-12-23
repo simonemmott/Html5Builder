@@ -1,13 +1,9 @@
-# CssSelectorParser
-The CssSelectorParser simple light weight utility to parse CSS selectors into structured data for use elsewhere
-It parses the given css selector in a single pass through the string and generates a list of element filters.
-Each element filter can have previous filters which encapsulate the css rules of contained in, is parent, is sibling of etc.
-The list represents the ',' operator of css to identify several rules in a single css selector.
-Each element filter defines a list of rules such as tag equals value or attribute ends with value etc.
+# Html5Builder
+The Html5Bulider is a simple light weight utility for dynamically generating HTML pages and snippets. It extends the XMLBuilder and consequently has a similar API. The Html5Builder API ordinarily restricts the user to only generate valid HTML 5, however the underlying XMLBuilder API is accessible and using the XMLBuilder methods allows the user to create non HTML 5 compliant documents. The Html5Builder can generate whole pages including the <DOCTYPE> tag and optionally the XML prolog if required. By default the DOCTYPE tag is the standard HTML 5 DOCTYPE tag, however it can also produce XHTML DOCTYPEs and by default properly closes all HTML tags compliant with the XHTML standard.
 
-The resultant structure data can be applied to any hierarchy of data where the type of each node in the hierarchy is identified
-by a string value and the nodes contain attributes identifiable by name and whose values can be encapsulated in a string. This is 
-the basic structure of all xml and html documents and most data in an object hierarchy.
+Included with the Html5Builder is a very simple MediaQueryBuilder that allows for dynamic generation of syntactically correct media queries for injection into relevant HTML attributes.
+
+The basic structure of the Html5Builder API has classes for each HTML element with `set*(...)` methods to set attributes and `<htmlTag>()` methods to create child elements of the current element with the relevant tag (where `<htmlTag>` is the tag of a valid HTML child element of the current element. The `up()` method of the XMLBuilder has been extended to `up(Class c)` where `c` refers to the class of the parent element thus providing compile time validation of the document structure.
 
 ### License
 
@@ -15,16 +11,24 @@ the basic structure of all xml and html documents and most data in an object hie
 
 ## Basic Example
 
-The CssSelectorParser parses CSS selectors into structured data that is simple to interrogate in java.
+The Html5Builder can easily generate HTML pages.
 
 This code:
 ```java
-String cssSelector = ".myClass > img[src$=.jpg], ol#thisId + li[data-myData='some data value']";
+Html5Builder hb = new Html5Builder();
 
-List<CssElementFilter> filters = CssSelectorParser.parse(cssSelector);
+hb.page().toHtml(new PrintWriter(System.out)).flush();
 ```
-Parses the CSS selector `.myClass > img[src$=.jpg], ol#thisId + li[data-myData='some data value']` into
-a set of structured data that can be easily examined in java.
+Produces the following HTML docuement.
+```
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body/>
+</html>
+```
 
 ## Getting Started
 
