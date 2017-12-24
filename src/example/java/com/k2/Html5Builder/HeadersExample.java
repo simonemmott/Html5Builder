@@ -12,7 +12,7 @@ import com.k2.XMLBuilder.XMLElement;
 
 public class HeadersExample {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 
 		Html5Builder hb = new Html5Builder().setIndent("  ");
 		hb.page()
@@ -43,7 +43,7 @@ public class HeadersExample {
 									.div()
 										.p().text("This is another paragraph at the lowest level").up(HtmlDiv.class) 
 										.page()
-			.toHtml(new PrintWriter(System.out)).flush();;
+			.toHtml(new File("docs/heading-sample.html"));
 
 	}
 
