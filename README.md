@@ -182,11 +182,12 @@ This method add a CSS style to the element for the given CSS attribute and value
 **NOTE** No validation is implemented on the CSS attribute and duplicate CSS attributes are not prevented.
 1. `setNullattributeHandling(NullAttributeHandling nullAttributeHandling)`
 This attribute defines how null attributes should be handled for this element. The possible values for this method are:
+
 |Enumeration|Description|
--------------------------
-|SKIP|If the attribute value is null the attribute is not included in the HTML output|
-|BLANK|If the attribute value is null the attribute is included in the HTML output but without an equals clause `="<value>"`.|
-|USE_NULL|If the attribute value is null the attribute is included in the HTML output but with the equals clause of `="null"`.|
+|-----------|-----------|
+|SKIP       |If the attribute value is null the attribute is not included in the HTML output|
+|BLANK      |If the attribute value is null the attribute is included in the HTML output but without an equals clause `="<value>"`.|
+|USE_NULL   |If the attribute value is null the attribute is included in the HTML output but with the equals clause of `="null"`.|
 
 
 
