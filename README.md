@@ -108,7 +108,8 @@ produces an HTML 5 compliant page as below.
 
 More detailed control can be achieved over the resultant page.
 
-The `page()` method is overloaded with a more complex variant that allows control over the `<DOTTYYPE>` tag and XML prolog. The method `page(boolean includeXmlProlog, boolean allowOptionalEndTags, boolean system, String fpi, String url)` creates an HTML page where with the following parameters
+The `page()` method is overloaded with a more complex variant that allows control over the `<DOCTYPE>` tag and XML prolog. The method `page(boolean includeXmlProlog, boolean allowOptionalEndTags, boolean system, String fpi, String url)` creates an HTML page where with the following parameters
+
 |Parameter           |Description|
 |--------------------|-----------|
 |includeXmlProlog    | True if the xml prolog should be included with the <DOCTYPE> tag |
