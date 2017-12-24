@@ -202,7 +202,7 @@ An element may define attributes that are specific to that particular element. S
 
 **NOTE** Where appropriate attributes some are set using an `Integer` or `Boolean` value rather than a `String` value and in some cases attributes can be set to either one of a list of specified values or an open string value. In these cases the `set<Atribute-Name>(...)` methods are overloaded to allow the full range of values defined by the HTML 5 standard.
 
-####W Working with elements
+#### Working with elements
 
 Adding a new child element to an existing element is achieved through the `<tag>()` methods available on the existing element where `<tag>` is the tag of the element to be added as a child element. The `<tag>()` methods are only available on elements that allow that tag as a child element and return the newly created child element.
 
