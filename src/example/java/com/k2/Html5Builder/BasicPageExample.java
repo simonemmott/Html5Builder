@@ -1,7 +1,5 @@
 package com.k2.Html5Builder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 import com.k2.Html5Builder.elements.HtmlBody;

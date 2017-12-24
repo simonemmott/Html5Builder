@@ -150,15 +150,15 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	 * @param value	The class name to add to the elements classes list
 	 * @return	This element for method chaining
 	 */
-	public T addClass(String value) { 
+	public T addClass(String cls) { 
 		String curVal = get("class");
 		if (curVal == null || "".equals(curVal)) {
-			attr("class", value);
+			attr("class", cls);
 			 return (T) this;
 		}
-		for (String cls : curVal.split("\\s")) if (cls.equals(value)) return (T) this;
+		for (String c : curVal.split("\\s")) if (c.equals(cls)) return (T) this;
 
-		attr("class", curVal+" "+value); 
+		attr("class", curVal+" "+cls); 
 		 return (T) this;
 	}
 	/**
@@ -202,13 +202,13 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	 * @param value The value of the style being set
 	 * @return This element for method chaining
 	 */
-	public T addStyle(String label, String value) {
+	public T addStyle(String cssAttribute, String value) {
 		String curVal = get("style");
 		if (curVal==null || "".equals(curVal)) {
-			attr("style", label+":"+value);
+			attr("style", cssAttribute+":"+value);
 			 return (T) this;
 		}
-		attr("style", curVal+";"+label+":"+value);
+		attr("style", curVal+";"+cssAttribute+":"+value);
 		 return (T) this;
 	}
 	

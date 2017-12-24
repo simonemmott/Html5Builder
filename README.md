@@ -86,6 +86,8 @@ The assembled document or snippet is output using the `toHtml(...)` methods.
 
 ## Page Examples
 
+### Populating the `<head>` element
+
 HTML pages define meta data about the page. Html5Builder provides methods on the head element of the page to set common page meta data. The head element provides the following methods:
 
 1. `keywords(String ... keywords)`
@@ -116,15 +118,6 @@ hb.page()
 		.keywords("many", "words")
 		.base("http://www.example.com/mySite/")
 		.page()
-	.body
-		.a()
-			.setHref("http://google.com")
-			.t("Google")
-			.up(HtmlBody.class)
-		.abbr()
-			.setTitle("World Health Organisation")
-			.text("WHO")
-			.page()
 .toHtml(new PrintWriter(System.out)).flush();
 ```
 Which produces the following output
@@ -139,15 +132,69 @@ Which produces the following output
 		<base href="http://www.example.com/mySite/">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-	<body>
-		<a href="http://google.com">Google</a>
-		<abbr title="World Health Organisation">WHO</abbr>
-	</body>
+	<body/>
 </html>
 ```
-
-
 All the above methods can be replicated using the normal API methods
+
+The above html can also be produced by the following code:
+```java
+Html5Builder hb = new Html5Builder();
+
+hb.page()
+	.head
+		.title()
+			.t("This is the page title")
+			.up(HtmlHead.class)
+		.meta()
+			.setName(MetaName.AUTHOR)
+			.setContent("Simon Emmott")
+			.up(HtmlHead.class)
+		.meta()
+			.setName(MetaName.DESCRIPTION)
+			.setContent("This is the page description")
+			.up(HtmlHead.class)
+		.meta()
+			.setName(MetaName.KEYWORDS)
+			.setContent("lots, world, and, more, of, words, hello, many")
+			.up(HtmlHead.class)
+		.base()
+			.setHref("http://www.example.com/mySite/")
+			.page()
+.toHtml(new PrintWriter(System.out)).flush();
+```
+**NOTE** By using the normal API methods the keywords have to be on in a single string of comma separated words and multiple inclusions of the meta tags for title, author and description etc. become possible with consequences for the generated HTML.
+
+### Populating the `<body>` element
+
+All HTML elements share a set of global attributes as defined by [W3C - HTML Gloabl Attributes](https://www.w3schools.com/tags/ref_standardattributes.asp). These attributes are implemented as `set<Attribute-Name>(...)` methods. Where `<Attribute-Name>` refers to the name of the attribute. These methods are available on all HTML elements. Some of these attributes like the `class` and `data-*` attribute allow multiple values. In these cases specific methods exist to manage these *special* attributes.
+
+These special methods are listed below:
+
+1. `addClass(String cls)`
+This method adds the class defined by the variable  `cls` to the list of classes defined by the `class` attribute. If the class attribute has not been set it will be set to the value of the `cls` variable.
+1. `removeClass(String cls)`
+This method removes the class defined by the variable `cls` from the list of classes defined by the `class` attribute. If class to be removed is the last class in the class list then the `class` attribute is removed from the element.
+1. `addData(String id, String value)`
+This method defines the value for the data attribute `data-<id>` where `<id>` is the identifier of the data attribute defined by the variable `id` and sets its value to the value of the `value` variable.
+1. `addStyle(String cssAttribute, String value)`
+This method add a CSS style to the element for the given CSS attribute and value.
+**NOTE** No validation is implemented on the CSS attribute and duplicate CSS attributes are not prevented.
+1. `setNullattributeHandling(NullAttributeHandling nullAttributeHandling)`
+This attribute defines how null attributes should be handled for this element. The possible values for this method are:
+|Enumeration|Description|
+-------------------------
+|SKIP|If the attribute value is null the attribute is not included in the HTML output|
+|BLANK|If the attribute value is null the attribute is included in the HTML output but without an equals clause `="<value>"`.|
+|USE_NULL|If the attribute value is null the attribute is included in the HTML output but with the equals clause of `="null"`.|
+
+
+
+
+Elements in the body section can be classified as *phrasing elements* or *flow elements*. Both phrasing elements and flow elements share a set of common attributes
+
+
+
 
 
 
