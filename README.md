@@ -19,7 +19,7 @@ Html5Builder hb = new Html5Builder();
 
 hb.page().toHtml(new PrintWriter(System.out)).flush();
 ```
-Produces the following HTML docuement.
+Produces the following HTML document.
 ```html
 <!DOCTYPE html>
 <html>
@@ -29,7 +29,7 @@ Produces the following HTML docuement.
 	<body/>
 </html>
 ```
-Note the automcatic inclusion of the DOCTYPE tag defining an HTML 5 document and the automatic inclusion of the head and body tags and the meta viewport specification causing the viewport to automatically scale with the device width.
+Note the automatic inclusion of the DOCTYPE tag defining an HTML 5 document and the automatic inclusion of the head and body tags and the meta viewport specification causing the viewport to automatically scale with the device width.
 
 The Html5Builder can easily generate HTML snippets.  An HTML snippet is an internally valid section of HTML with a single root element.
 
@@ -82,6 +82,108 @@ The Html5Builder API includes java classes for each valid HTML 5 element and eac
 In all cases the HTML document or snippet is assembled by calls to the `set*(...)` methods to set attribute values and the `<htmlTag>()` methods to create and focus on child elements and the `up(...)` methods to step back up the document path. In the case of HTML documents the `page()` method returns focus back to the documents HtmlPage instance.
 
 The assembled document or snippet is output using the `toHtml(...)` methods.
+
+### Creating HTML Pages
+
+The simplest way to create an HTML page is through the `page()` method of Html5Builder.
+
+This code:
+```java
+Html5Builder hb = new Html5Builder();
+
+hb.page().toHtml(new PrintWriter(System.out)).flush();
+```
+produces an HTML 5 compliant page as below.
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body/>
+</html>
+```
+
+More detailed control can be achieved over the resultant page.
+
+The `page()` method is overloaded with a more complex variant that allows control over the `<DOTTYYPE>` tag and XML prolog. The method `page(boolean includeXmlProlog, boolean allowOptionalEndTags, boolean system, String fpi, String url)` creates an HTML page where with the following parameters
+|Parameter           |Description|
+|--------------------|-----------|
+|includeXmlProlog    | True if the xml prolog should be included with the <DOCTYPE> tag |
+|allowOptionalEndTags| True if the page allows empty elements to finish without an end tag. **NOTE** End tags are required for XHTML pages. Html5Builder disallows optional end tags by default |
+|system              | True if the document is a system i.e. private document |
+|fpi                 | The formal public identifier of this document |
+|url                 | The URL of the XML DTD for this page |
+
+The following code shows creating an HTML page with a custom `<DOCTYPE>` tag including the XML prolog
+```java
+Html5Builder hb = new Html5Builder();
+
+hb.page(true, // includeXmlProlog
+		true, // allowOptionalEndTags
+		true, // system
+		"-//K2//K2 Sample document v1.0//EN", // Formal Public Identifier
+		"http://k2.com/sample/sampleDoc.dtd") // URL of document DTD
+.toHtml(new PrintWriter(System.out)).flush();
+```
+And produces the following output
+```html
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html SYSTEM "-//K2//K2 Sample document v1.0//EN" "http://k2.com/sample/sampleDoc.dtd">
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body/>
+</html>
+```
+### Controlling the page layout
+The layout of an HTML document is an indented hierarchy of XML elements. This structure limits the possibilities for changing the layout of an HTML page.  However it is possible to control the size of the indent and whether or not to include a prolog with the page.
+
+An Html5Builder instance allows the definition of the indent string which is repeated for each level of indent in the resultant document through the method `setIndent(String)` and whether or not to include the document prolog through the method `includeProlog(Boolean)`. Both of these methods return the Html5builder instance for method chaining.
+
+The following code shows these methods in action:
+```java
+Html5Builder hb = new Html5Builder().includeProlog(false).setIndent("  ");
+
+hb.page().toHtml(new PrintWriter(System.out)).flush();
+```
+Which produces the following output.
+```html
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body/>
+</html>
+```
+**Note** The reduced indent and the lack of `<DOCTYPE>` tag.
+
+### Setting the user agent information
+HTML pages are served to a specific user agent. The user agent details the type of device displaying the page to the end user. It can be useful to know the details of the user agent when generating dynamic HTML pages and snippets. The user agent information can be given to the Html5Builder instance using the `setUserAgentInfo(...)` method of the Html5Builder instance. This method returns the Html5Builder instance for method chaining
+
+This code sets the user agent as Chrome version 32 or higher.
+```java
+UserAgentInfo uaInfo = new UserAgentInfo(UserAgentType.CHROME, 32);
+
+Html5Builder hb = new Html5Builder().setUAgentInfo(uaInfo);
+```
+
+### Seting the Html5Builders warning logger
+
+Some combinations of options are not checked at compile time. To prevent the resultant code from throwing errors for invalid combinations of tags and attributes when the Html5Builder instance encounters such issues it typically skips the offending attribute to preserve compliance with the Html 5 standard and includes a warning in the system log. 
+
+By default the Html5Builder warning messages are sent to an anonymous logger. Typically this will log to standard output.
+
+It is possible to customise the Html5Builders warning log throught the creation of a custom Logger instance and passing it to the Html5builder instance through the `setWarngingLog(Logger)` method.
+
+The example below shows setting a custom warning logger.
+```java
+Logger htmlWarningLog = Logger.getLogger("Html5Builder warning log");
+
+Html5Builder hb = new Html5Builder().setWarngingLog(htmlWarningLog);
+```
+The `setWarningLog(Logger)` method returns the Html5Builder instance for method chaining.
 
 
 ## Page Examples
@@ -208,7 +310,145 @@ Adding a new child element to an existing element is achieved through the `<tag>
 
 Since each node on an HTML hierarchy generated by the Html5Builder is implemented as a specific class the `up()` method of the XMLBuilder is not sufficient to return control to the parent element and allow method chaining to set attributes specific to the parent element or add child elements specific to the parent element. For this reason the `up()` method has been extended with the `up(Class cls)` method where the class `cls` identifies the class of the parent element. If no further method chaining is required from the parent element beyond going `up(...)` another level the XMLBuilder method `up()` can be used omitting the class of the parent element.
 
-Elements in the body section can be classified as *phrasing elements* or *flow elements*. Both phrasing elements and flow elements share a set of common attributes
+#### Html heading elements
+
+HTML defines 6 heading elements <h1> to <h6>. When HTML is being generated in snippets it is not known at design time how deep in a document a snippet will be placed and therefore what heading level to ascribe to heading elements within an HTML snippet. For this reason Html5Builder defines a generic heading element. `<h>` This element is not part of the HTML 5 standard. However when a `<h>` element is included in a document the concrete level of the HTML heading tag is derived from the location of the `<h>` tag within the final page.
+
+When the `<h>` tag is rendered with the `toHtml(...)` methods the concrete tag of hte `<h>` element is calculated by examining the parents of the `<h>` tag and looking for the nearest HTML heading tag `<h1>` to `<h6>` that is the previous sibling of one of the `<h>` tags parents. It then extracts the level of the nearest HTML heading tag and increments it by one up to a maximum of 6 and applies this level to the `<h>` tag. If not prior HTML heading tags are identifed then the `<h>` tag is rendered as an `<h1>` element.
+
+The following code:
+```java
+Html5Builder hb = new Html5Builder().setIndent("  ");
+hb.page()
+	.body
+		.section()
+			.h().text("This is the top level header").up(HtmlSection.class)
+			.div()
+				.p().text("This is a paragraph in the highest level").up(HtmlDiv.class)
+				.p().text("This is another paragraph in the highest level").up(HtmlDiv.class)
+				.section()
+					.h().text("This is a header below the top level").up(HtmlSection.class)
+					.div()
+						.p().text("Yet more paragraphs").up(HtmlDiv.class)
+						.section()
+							.h().text("This is a low level header").up(HtmlSection.class)
+							.div()
+								.p().text("This is a parapgraph a the lowest level").up(HtmlDiv.class) 
+								.up(HtmlSection.class)
+							.up(HtmlDiv.class)
+						.up(HtmlSection.class)
+					.up(HtmlDiv.class)
+				.section()
+					.h().text("This is a another header below the top level").up(HtmlSection.class)
+					.div()
+						.p().text("Yet another paragraph").up(HtmlDiv.class)
+						.section()
+							.h().text("This is another lowest level header").up(HtmlSection.class)
+							.div()
+								.p().text("This is another paragraph at the lowest level").up(HtmlDiv.class) 
+								.page()
+	.toHtml(new PrintWriter(System.out)).flush();;
+```
+Produces this HTML
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <section>
+      <h1>This is the top level header</h1>
+      <div>
+        <p>This is a paragraph in the highest level</p>
+        <p>This is another paragraph in the highest level</p>
+        <section>
+          <h2>This is a header below the top level</h2>
+          <div>
+            <p>Yet more paragraphs</p>
+            <section>
+              <h3>This is a low level header</h3>
+              <div>
+                <p>This is a parapgraph a the lowest level</p>
+              </div>
+            </section>
+          </div>
+        </section>
+        <section>
+          <h2>This is a another header below the top level</h2>
+          <div>
+            <p>Yet another paragraph</p>
+            <section>
+              <h3>This is another lowest level header</h3>
+              <div>
+                <p>This is another paragraph at the lowest level</p>
+              </div>
+            </section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </body>
+</html>
+```
+**NOTE** The automatic conversion of the `<h>` element into `<h1>` to `<h3>` elements
+
+**NOTE** The inclusion of a `<div>` element as the next sibling of the `<h>` elements to allow child `<h>` elements to find their nearest heading as the previous sibling.
+
+#### Example
+
+Below is an example of an HTML page generated by the Html5Builder
+
+This code:
+```java
+Html5Builder hb = new Html5Builder().setIndent("  ").setWarngingLog(Logger.getLogger("Html Builder Warning"));
+
+hb.page()
+	.head
+		.title("Sample page generatd by Html5Builder")
+		.author("Simon Emmott")
+		.description("This page is a sample page generated by the Html5builder")
+		.keywords("Html5Builder", "Example")
+		.up(HtmlPage.class)
+	.body
+		.section()
+			.h().text("Html5Builder sample page").up(HtmlSection.class)
+			.div()
+				.p().text("The example shows a very simple page generated using the Html5Builder").up(HtmlDiv.class)
+				.p()
+					.text("For more details on the Html5Builder please see the Github project ")
+					.a().setHref("https://github.com/simonemmott/Html5Builder").text("Html5Builder").up(HtmlP.class)
+					.text(" or the Html5Builders ")
+					.a().setHref("https://simonemmott.github.io/Html5Builder/javadoc/").text("javadoc").page()
+.toHtml(new File("docs/sample.html"));
+```
+Produces this HTML as a file which can be viewed at [sample](https://simonemmott.github.io/Html5Builder/sample.html)
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample page generatd by Html5Builder</title>
+    <meta name="author" content="Simon Emmott">
+    <meta name="description" content="This page is a sample page generated by the Html5builder">
+    <meta name="keywords" content="Html5Builder, Example">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <section>
+      <h1>Html5Builder sample page</h1>
+      <div>
+        <p>The example shows a very simple page generated using the Html5Builder</p>
+        <p>
+          For more details on the Html5Builder please see the Github project 
+          <a href="https://github.com/simonemmott/Html5Builder">Html5Builder</a>
+           or the Html5Builders 
+          <a href="https://simonemmott.github.io/Html5Builder/">javadoc</a>
+        </p>
+      </div>
+    </section>
+  </body>
+</html>
+```
 
 
 

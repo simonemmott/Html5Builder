@@ -167,7 +167,7 @@ public class Html5Builder extends XMLBuilder
      * 
      * This method allows control over all the details of the xml prolog
      * @param includeXmlProlog	True if the Xml prolog should be included
-     * @param allowOptionalEndTags The method to handle null attribute values
+     * @param allowOptionalEndTags True if end tags are optional on empty elements. <strong>Note</strong> End tags are required for XTHML documents
      * @param system		True if the DOCTYPE is a system document rather than a public document
      * @param fpi The string representing the 'fpi' portion of the DOCTYPE tag.
      * @param url The string representing the 'url' portion of the DOCTYPE tag.
