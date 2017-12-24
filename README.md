@@ -5,7 +5,7 @@ Included with the Html5Builder is a very simple MediaQueryBuilder that allows fo
 
 The basic structure of the Html5Builder API has classes for each HTML element with `set*(...)` methods to set attributes and `<htmlTag>()` methods to create child elements of the current element with the relevant tag (where `<htmlTag>` is the tag of a valid HTML child element of the current element. The `up()` method of the XMLBuilder has been extended to `up(Class c)` where `c` refers to the class of the parent element thus providing compile time validation of the document structure.
 
-For example output and detailed documentation please view the [Html5Builder](https://simonemmott.github.io/Html5Builder/) documentation
+For example output and detailed documentation please view the [Html5Builder](https://simonemmott.github.io/Html5Builder/index.html) documentation
 
 ### License
 
