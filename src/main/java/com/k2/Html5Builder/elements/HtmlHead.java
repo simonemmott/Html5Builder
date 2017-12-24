@@ -128,7 +128,7 @@ public class HtmlHead extends HtmlGlobalElement<HtmlHead> {
 	
 	/**
 	 * This method sets the author for this html page
-	 * @param author		The author for this html page
+	 * @param href		The base href for this html page
 	 * @return	This head element for method chaining
 	 */
 	@SuppressWarnings("rawtypes")

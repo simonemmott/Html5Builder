@@ -99,7 +99,6 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	public T setDropzone(DropZone value) { attr("dropzone", value.getValue()); return (T) this; }
 	/**
 	 * Set the 'hidden' attribute
-	 * @param value	The value to set for the attribute
 	 * @return	This element for method chaining
 	 */
 	public T setHidden() { attr("hidden", null); return (T) this; }
@@ -147,7 +146,7 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	public T setStyle(String value) { attr("style", value); return (T) this; }
 	/**
 	 * Add a class to the elements class list
-	 * @param value	The class name to add to the elements classes list
+	 * @param cls	The class name to add to the elements classes list
 	 * @return	This element for method chaining
 	 */
 	public T addClass(String cls) { 
@@ -198,7 +197,7 @@ public abstract class HtmlGlobalElement<T extends XMLElement> extends XMLElement
 	public T addData(String id, String value) { attr("data-"+id, value); return (T) this; }
 	/**
 	 * Add a css style to the list of styles for this element
-	 * @param label	The label of the style being set
+	 * @param cssAttribute	The label of the style being set
 	 * @param value The value of the style being set
 	 * @return This element for method chaining
 	 */
