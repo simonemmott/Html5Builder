@@ -45,7 +45,7 @@ public class Html5BuilderTest {
 				"\t\t<meta http-equiv=\"refresh\" content=\"30\">\n" + 
 				"\t\t<meta name=\"viewport\" content=\"Some other viewport\">\n" + 
 				"\t\t<meta name=\"description\" content=\"This is the page description\">\n" + 
-				"\t\t<meta name=\"keywords\" content=\"more, words, hello, world, and, more, words, lots, and, lots, of, words\">\n" + 
+				"\t\t<meta name=\"keywords\" content=\"lots, world, and, more, of, words, hello\">\n" + 
 				"\t\t<base href=\"http://www.example.com/mySite/\" target=\"_parent\">\n" + 
 				"\t\t<meta name=\"author\" content=\"Yet another author\">\n" + 
 				"\t</head>\n" + 
@@ -84,7 +84,7 @@ public class Html5BuilderTest {
 			.text("WHO")
 			.page()
 		.toHtml(sw);
-
+		
 		assertEquals(expectedResult, sw.toString());
 
     }
@@ -1026,8 +1026,8 @@ public class Html5BuilderTest {
     public void headTest()
     {
 
-		assertEquals("<head><meta name=\"author\" content=\"Author\"/><meta name=\"description\" content=\"Description\"/><meta name=\"keywords\" content=\"key, word\"/><meta http-equiv=\"refresh\" content=\"10\"/><title>Title</title><meta name=\"viewport\" content=\"Viewport\"/></head>", 
-				hb.element(HtmlHead.class)
+		assertEquals("<head><meta name=\"author\" content=\"Author\"/><meta name=\"description\" content=\"Description\"/><meta name=\"keywords\" content=\"word, key\"/><meta http-equiv=\"refresh\" content=\"10\"/><title>Title</title><meta name=\"viewport\" content=\"Viewport\"/></head>", 
+		hb.element(HtmlHead.class)
 				.author("Author")
 				.description("Description")
 				.keywords("key", "word")
