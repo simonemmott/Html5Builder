@@ -4,7 +4,7 @@
 
   <groupId>com.k2</groupId>
   <artifactId>Html5Builder</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0</version>
   <packaging>jar</packaging>
 
   <name>Html5Builder</name>
@@ -18,7 +18,7 @@
     <dependency>
       <groupId>com.k2</groupId>
       <artifactId>XMLBuilder</artifactId>
-      <version>1.0.3-SNAPSHOT</version>
+      <version>1.0.3</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
